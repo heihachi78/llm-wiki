@@ -26,6 +26,7 @@ The `knowledge-base/raw/` and `knowledge-base/wiki/` directories are created aut
 | `/query <question>` | Research a question using wiki knowledge + active web research, then update the wiki with discoveries |
 | `/wiki <question>` | Search the wiki only (no web research) — fast internal lookup |
 | `/lint` | Health-check the wiki for broken links, contradictions, orphan pages, missing cross-references |
+| `/bug` | Review the current session for wiki command issues and log them to `bugs.md` |
 
 ## How it works
 
