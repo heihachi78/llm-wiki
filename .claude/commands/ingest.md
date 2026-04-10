@@ -21,7 +21,9 @@ Ask the user what to emphasize and whether anything should be highlighted or de-
 ### Step 3: Create source summary page
 Create a page in `wiki/sources/` with the standard source page format:
 - Frontmatter: title, type: source, tags, sources (self-referencing the raw file), dates
-- Sections: Summary, Key Findings, Methodology (if applicable), Relevance, Source Info
+- Sections: Summary, Key Findings, Key Quotes, Methodology (if applicable), Relevance, Contradictions, Source Info
+- Key Quotes: 3-5 notable direct quotes from the source, each with brief context (e.g. `> "Quote here" — context about why this matters`)
+- Contradictions: explicit section listing any conflicts with existing wiki content. If none, write "No contradictions identified." This gives contradiction tracking a permanent home rather than relying on inline flags.
 - Source Info should include: author(s), date, URL/DOI if available, file path to raw source
 
 ### Step 4: Identify and update entities

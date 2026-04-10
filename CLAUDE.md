@@ -34,7 +34,7 @@ date_updated: YYYY-MM-DD
 
 ### Section structure by page type
 
-**Source pages:** Summary, Key Findings, Methodology (if applicable), Relevance, Source Info
+**Source pages:** Summary, Key Findings, Key Quotes, Methodology (if applicable), Relevance, Contradictions, Source Info
 **Entity pages:** Summary, Details, Related Work, Sources
 **Concept pages:** Summary, Details, Open Questions, Sources
 **Analysis pages:** Summary, Findings, Methodology, Sources
