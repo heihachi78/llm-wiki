@@ -5,16 +5,17 @@ This is a research wiki maintained by Claude Code. The wiki is a persistent, com
 ## Directory Structure
 
 ```
-raw/              # Immutable source documents (never modify these)
-  assets/         # Downloaded images referenced by sources
-wiki/             # LLM-generated wiki pages (you own this entirely)
-  index.md        # Content catalog — read this first for any operation
-  log.md          # Chronological operation log (append-only)
-  overview.md     # High-level synthesis and evolving thesis
-  sources/        # One summary page per ingested source
-  entities/       # People, organizations, tools, datasets
-  concepts/       # Ideas, theories, methods, frameworks
-  analyses/       # Comparisons, syntheses, filed query outputs
+knowledge-base/           # Separate git repo for wiki content
+  raw/                    # Immutable source documents (never modify these)
+    assets/               # Downloaded images referenced by sources
+  wiki/                   # LLM-generated wiki pages (you own this entirely)
+    index.md              # Content catalog — read this first for any operation
+    log.md                # Chronological operation log (append-only)
+    overview.md           # High-level synthesis and evolving thesis
+    sources/              # One summary page per ingested source
+    entities/             # People, organizations, tools, datasets
+    concepts/             # Ideas, theories, methods, frameworks
+    analyses/             # Comparisons, syntheses, filed query outputs
 ```
 
 ## Page Format
@@ -68,7 +69,7 @@ date_updated: YYYY-MM-DD
 
 ## Workflow Tips
 
-- Always read `wiki/index.md` before any operation to understand current wiki state
-- After any operation that modifies wiki pages, update both `wiki/index.md` and `wiki/log.md`
+- Always read `knowledge-base/wiki/index.md` before any operation to understand current wiki state
+- After any operation that modifies wiki pages, update both `knowledge-base/wiki/index.md` and `knowledge-base/wiki/log.md`
 - When in doubt about emphasis or interpretation, ask the user
 - The wiki should be browsable and useful on its own — write for a human reader, not just for retrieval

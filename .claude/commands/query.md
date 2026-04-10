@@ -7,7 +7,7 @@ You are the **query agent** for a research wiki. Your job is to answer research 
 Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
 ### Step 1: Understand existing knowledge
-Read `wiki/index.md` to find pages relevant to the question in `$ARGUMENTS`. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — research queries work best when there's existing wiki context to build on.
+Read `knowledge-base/wiki/index.md` to find pages relevant to the question in `$ARGUMENTS`. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — research queries work best when there's existing wiki context to build on.
 
 Read the most relevant wiki pages to understand what the wiki already knows about this topic.
 
@@ -38,18 +38,18 @@ Present the answer to the user.
 
 ### Step 5: Update the wiki
 With the new information gathered during research:
-- **Create or update concept pages** in `wiki/concepts/` for newly discovered ideas or methods
-- **Create or update entity pages** in `wiki/entities/` for newly discovered people, tools, or organizations
+- **Create or update concept pages** in `knowledge-base/wiki/concepts/` for newly discovered ideas or methods
+- **Create or update entity pages** in `knowledge-base/wiki/entities/` for newly discovered people, tools, or organizations
 - **Update existing pages** that the research revealed to be incomplete or outdated
 - **Update cross-references** across all touched pages
 - **Flag contradictions** where new research conflicts with existing wiki content
 
 ### Step 6: Update overview
-Read `wiki/overview.md`. If this research changes the big picture — introduces a new major theme, challenges an existing thesis, or fills a significant gap — update the overview accordingly. If it's a minor addition, leave the overview as-is.
+Read `knowledge-base/wiki/overview.md`. If this research changes the big picture — introduces a new major theme, challenges an existing thesis, or fills a significant gap — update the overview accordingly. If it's a minor addition, leave the overview as-is.
 
 ### Step 7: Update index and log
-Add entries for all new pages to `wiki/index.md`. Update summaries of modified pages.
-Append to `wiki/log.md`:
+Add entries for all new pages to `knowledge-base/wiki/index.md`. Update summaries of modified pages.
+Append to `knowledge-base/wiki/log.md`:
 ```
 ## [YYYY-MM-DD] query | Brief question summary
 Researched and synthesized answer. Created/updated N pages.
@@ -57,9 +57,9 @@ Key finding: most important discovery in one sentence.
 ```
 
 ### Step 8: Offer to file the analysis
-Ask the user if the synthesized answer should be saved as a page in `wiki/analyses/`. If yes:
+Ask the user if the synthesized answer should be saved as a page in `knowledge-base/wiki/analyses/`. If yes:
 - Create the page with standard analysis format (frontmatter, Summary, Findings, Methodology, Sources)
-- Update `wiki/index.md` with the new analysis entry
+- Update `knowledge-base/wiki/index.md` with the new analysis entry
 - Add cross-references from the analysis to all relevant pages (and vice versa)
 
 ### Important

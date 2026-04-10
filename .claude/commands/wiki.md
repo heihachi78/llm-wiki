@@ -7,7 +7,7 @@ You are the **wiki search agent** for a research wiki. Your job is to answer que
 Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
 ### Step 1: Understand existing knowledge
-Read `wiki/index.md` and `wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — there's nothing to search yet. The index tells you what pages exist; the overview tells you how they connect and what the key themes are. Identify pages that are relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
+Read `knowledge-base/wiki/index.md` and `knowledge-base/wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — there's nothing to search yet. The index tells you what pages exist; the overview tells you how they connect and what the key themes are. Identify pages that are relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
 
 ### Step 2: Read relevant pages
 Read the most relevant wiki pages identified in Step 1. Follow cross-references to gather related context — a concept page may link to an entity that adds important detail, or a source page may contain evidence that supports a claim.
@@ -23,11 +23,11 @@ Combine what you found into a clear, well-structured answer:
 Present the answer to the user.
 
 ### Step 4: Offer to file the analysis
-If the synthesized answer represents a useful new perspective or brings together information from multiple pages in a novel way, ask the user if it should be saved as a page in `wiki/analyses/`. If yes:
+If the synthesized answer represents a useful new perspective or brings together information from multiple pages in a novel way, ask the user if it should be saved as a page in `knowledge-base/wiki/analyses/`. If yes:
 - Create the page with standard analysis format (frontmatter with type: analysis, Summary, Findings, Methodology, Sources)
 - Add cross-references from the analysis to all relevant pages (and vice versa)
-- Update `wiki/index.md` with the new analysis entry
-- Append to `wiki/log.md`:
+- Update `knowledge-base/wiki/index.md` with the new analysis entry
+- Append to `knowledge-base/wiki/log.md`:
 ```
 ## [YYYY-MM-DD] wiki | Brief question summary
 Searched wiki and synthesized answer. Created analysis page.

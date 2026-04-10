@@ -14,9 +14,9 @@ You never write the wiki yourself. You curate sources, ask questions, and direct
 
 1. Clone this repo into your project directory
 2. Open it with [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
-3. Drop source documents (markdown, PDF) into `raw/` and start with `/ingest`
+3. Drop source documents (markdown, PDF) into `knowledge-base/raw/` and start with `/ingest`
 
-The `raw/` and `wiki/` directories are created automatically on first use.
+The `knowledge-base/raw/` and `knowledge-base/wiki/` directories are created automatically on first use. The `knowledge-base/` folder is a separate git repository for wiki content.
 
 ## Commands
 
@@ -31,13 +31,13 @@ The `raw/` and `wiki/` directories are created automatically on first use.
 
 **Three layers:**
 
-- **Raw sources** (`raw/`) — your curated source documents. Immutable — the LLM reads but never modifies them.
-- **The wiki** (`wiki/`) — LLM-generated markdown pages: source summaries, entity pages, concept pages, analyses, an overview, and an index. The LLM owns this entirely.
+- **Raw sources** (`knowledge-base/raw/`) — your curated source documents. Immutable — the LLM reads but never modifies them.
+- **The wiki** (`knowledge-base/wiki/`) — LLM-generated markdown pages: source summaries, entity pages, concept pages, analyses, an overview, and an index. The LLM owns this entirely.
 - **The schema** (`CLAUDE.md`) — tells the LLM how the wiki is structured, what conventions to follow, and how to operate. You and the LLM co-evolve this over time.
 
 ## Browsing the wiki
 
-The wiki is designed to work with [Obsidian](https://obsidian.md/) — open the `wiki/` folder as a vault to get graph view, backlinks, and live navigation. It also works as plain markdown files in any editor.
+The wiki is designed to work with [Obsidian](https://obsidian.md/) — open the `knowledge-base/wiki/` folder as a vault to get graph view, backlinks, and live navigation. It also works as plain markdown files in any editor.
 
 ## Credits
 
