@@ -1,0 +1,36 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Claude Code internal
+.claude/settings.json
+.claude/plans/
+.claude/memory/
+
+# Development notes
+idea.md
+
+# Obsidian config
+wiki/.obsidian/
+wiki/.trash/
+
+# Source documents (user-specific content)
+raw/
+
+# Wiki generated content
+wiki/index.md
+wiki/log.md
+wiki/overview.md
+wiki/sources/*
+!wiki/sources/.gitkeep
+wiki/entities/*
+!wiki/entities/.gitkeep
+wiki/concepts/*
+!wiki/concepts/.gitkeep
+wiki/analyses/*
+!wiki/analyses/.gitkeep
