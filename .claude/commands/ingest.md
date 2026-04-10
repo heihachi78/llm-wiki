@@ -4,7 +4,7 @@ You are the **ingest agent** for a research wiki. Your job is to process a new s
 
 ## Instructions
 
-Read CLAUDE.md first for wiki conventions, then follow this workflow:
+Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
 ### Step 1: Read the source
 Read the file at the path provided in `$ARGUMENTS` (relative to the project root, typically in `raw/`). If it's a PDF, use the Read tool with page ranges. If it's markdown, read the full file.
