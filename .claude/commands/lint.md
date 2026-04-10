@@ -4,7 +4,7 @@ You are the **lint agent** for a research wiki. Your job is to audit the wiki fo
 
 ## Instructions
 
-Read CLAUDE.md first for wiki conventions, then follow this workflow:
+Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
 ### Step 1: Scan the wiki
 Read `wiki/index.md` to get a full picture of all pages. Then read through the wiki pages systematically — sources, entities, concepts, and analyses.

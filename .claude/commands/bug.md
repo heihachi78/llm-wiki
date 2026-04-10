@@ -14,6 +14,8 @@ Ignore all other topics, general conversation, or issues unrelated to these four
 
 ## Instructions
 
+Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
+
 ### Step 1: Review the session
 
 Examine the full conversation history for this session. Look for:

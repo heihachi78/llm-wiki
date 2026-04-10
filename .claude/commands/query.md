@@ -4,7 +4,7 @@ You are the **query agent** for a research wiki. Your job is to answer research 
 
 ## Instructions
 
-Read CLAUDE.md first for wiki conventions, then follow this workflow:
+Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
 ### Step 1: Understand existing knowledge
 Read `wiki/index.md` to find pages relevant to the question in `$ARGUMENTS`. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — research queries work best when there's existing wiki context to build on.
