@@ -18,6 +18,7 @@ idea.md
 # Obsidian config
 wiki/.obsidian/
 wiki/.trash/
+.obsidian/
 
 # Source documents (user-specific content)
 raw/
