@@ -16,6 +16,7 @@ Audit every page for the following issues, organized by severity:
 - **Contradictions:** Pages that make conflicting claims about the same topic
 - **Stale claims:** Information superseded by newer sources but not yet updated
 - **Broken links:** Links to pages that don't exist
+- **Broken raw file references:** Source pages whose `sources:` frontmatter or `Raw file:` path points to a file that doesn't exist under `raw/`. For each broken reference, search `raw/` subfolders for the correct filename and suggest the corrected path. Fix both the frontmatter `sources:` field and the `Raw file:` line in the Source Info section.
 
 **Medium severity:**
 - **Stale overview:** Does `wiki/overview.md` accurately reflect the wiki's current themes, scope, and gaps? Check: Are all major topic areas represented in Key Themes? Are listed gaps still actual gaps (or have they been filled)? Are there new topic clusters that the overview doesn't mention? Does the "Current Focus" still match what the wiki actually contains?
