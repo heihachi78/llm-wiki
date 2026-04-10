@@ -16,22 +16,7 @@ Thumbs.db
 idea.md
 
 # Obsidian config
-wiki/.obsidian/
-wiki/.trash/
 .obsidian/
 
-# Source documents (user-specific content)
-raw/
-
-# Wiki generated content
-wiki/index.md
-wiki/log.md
-wiki/overview.md
-wiki/sources/*
-!wiki/sources/.gitkeep
-wiki/entities/*
-!wiki/entities/.gitkeep
-wiki/concepts/*
-!wiki/concepts/.gitkeep
-wiki/analyses/*
-!wiki/analyses/.gitkeep
+# Knowledge base (separate git repo)
+knowledge-base/
