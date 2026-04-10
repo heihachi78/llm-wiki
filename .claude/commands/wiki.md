@@ -7,7 +7,7 @@ You are the **wiki search agent** for a research wiki. Your job is to answer que
 Read CLAUDE.md first for wiki conventions, then follow this workflow:
 
 ### Step 1: Understand existing knowledge
-Read `wiki/index.md` and `wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. The index tells you what pages exist; the overview tells you how they connect and what the key themes are. Identify pages that are relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
+Read `wiki/index.md` and `wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — there's nothing to search yet. The index tells you what pages exist; the overview tells you how they connect and what the key themes are. Identify pages that are relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
 
 ### Step 2: Read relevant pages
 Read the most relevant wiki pages identified in Step 1. Follow cross-references to gather related context — a concept page may link to an entity that adds important detail, or a source page may contain evidence that supports a claim.
