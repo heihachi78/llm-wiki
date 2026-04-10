@@ -64,6 +64,7 @@ date_updated: YYYY-MM-DD
 - `/query` — Ask a research question (with active web research)
 - `/wiki` — Search the wiki for answers (wiki-only, no web research)
 - `/lint` — Health-check the wiki for issues
+- `/bug` — Review the session for wiki command issues and log them to `bugs.md`
 
 ## Workflow Tips
 
