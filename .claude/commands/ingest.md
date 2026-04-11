@@ -8,7 +8,7 @@ Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-ste
 
 ### Preamble: Resolve KB root and QMD availability
 
-1. Check for `.claude/wiki-config.json`. If it exists, read `root` and `collection` from it. If not, use `root = <absolute path to project root>/knowledge-base/` and `collection = wiki`.
+1. Discover the wiki config by searching the project for a file named `wiki-config.json` — use Glob with patterns `*/wiki-config.json` and `*/*/wiki-config.json` from the project root. If found, set `root` to the directory containing that file (the config's own parent directory) and read `collection` from its JSON contents. If not found, default to `root = <project root>/knowledge-base/` and `collection = wiki`, and suggest the user run `/setup <path>`.
 2. Use `<root>/` everywhere in this command instead of `knowledge-base/`.
 3. Check QMD availability:
    ```bash

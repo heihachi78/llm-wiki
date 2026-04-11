@@ -12,13 +12,13 @@ You are the **setup agent** for a research wiki. Your job is to configure the KB
 - The basename must be URI-safe (letters, digits, hyphens, underscores). If it isn't, warn the user and suggest a safe name.
 
 ### Step 2: Write config
-Write `.claude/wiki-config.json` at the project root (next to `.claude/`):
+Write `<root>/wiki-config.json` **inside the KB folder itself**:
 ```json
 {
-  "root": "<absolute-path>",
   "collection": "<basename>"
 }
 ```
+The file's own location defines the KB root, so no `root` field is needed. Make sure `<root>/` exists before writing (Step 3 verifies its subdirectories).
 
 ### Step 3: Verify structure
 Check that `<root>/raw/` and `<root>/wiki/` both exist.
@@ -65,6 +65,6 @@ KB root set to <absolute-path>. QMD collection initialised.
 Tell the user: "Setup complete. All wiki commands will now use `<root>/`."
 
 ## Important
-- Re-running `/setup` is safe — it overwrites the config and updates the QMD context without duplicating the collection.
+- Re-running `/setup` is safe — it overwrites the config (inside the KB folder) and updates the QMD context without duplicating the collection.
 - Run `/setup` again whenever you rename or move the KB folder.
 - If QMD is not installed, Steps 5–7 will fail. Install it first: `npm install -g @tobilu/qmd` or `bun install -g @tobilu/qmd`.

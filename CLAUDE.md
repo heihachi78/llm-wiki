@@ -6,7 +6,7 @@ This is a research wiki maintained by Claude Code. The wiki is a persistent, com
 
 Run `/setup <path>` once before first use to configure the KB root folder and initialise the QMD search index. Re-run if you rename or move the KB folder.
 
-The KB root is stored in `.claude/wiki-config.json`. All wiki commands read this file to resolve paths. If the file does not exist, commands default to `knowledge-base/` in the project root.
+The KB config lives at `<kb-root>/wiki-config.json` **inside the knowledge base folder itself**, not under `.claude/`. Commands locate it by searching the project for a file named `wiki-config.json` (glob `*/wiki-config.json` and `*/*/wiki-config.json` from the project root); the file's parent directory is the KB root, and the file holds just `{ "collection": "<name>" }`. If no config is found, commands default to `knowledge-base/` in the project root with `collection = wiki`.
 
 ## Directory Structure
 
