@@ -10,18 +10,34 @@ Instead of traditional RAG that rediscovers knowledge from scratch on every quer
 
 You never write the wiki yourself. You curate sources, ask questions, and direct the analysis. The LLM does the summarizing, cross-referencing, and bookkeeping.
 
+## Prerequisites
+
+The wiki commands use [QMD](https://github.com/tobilu/qmd) (`@tobilu/qmd`) as a local semantic search index over your wiki pages. `/ingest`, `/query`, `/wiki`, and `/lint` all call the `qmd` CLI, so it must be installed globally before first use:
+
+```bash
+npm install -g @tobilu/qmd
+# or
+bun install -g @tobilu/qmd
+```
+
+Without QMD, the wiki commands will fail at their search steps.
+
 ## Setup
 
-1. Clone this repo into your project directory
-2. Open it with [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
-3. Drop source documents (markdown, PDF) into `knowledge-base/raw/` and start with `/ingest`
+1. Install QMD (see [Prerequisites](#prerequisites)).
+2. Clone this repo into your project directory.
+3. Open it with [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+4. Create your KB folder with `raw/` and `wiki/` subdirectories. The folder can be named anything — e.g. `knowledge-base/`, `my-research/`, `pemik-wiki/`.
+5. Run `/setup <path-to-kb-folder>` once. This writes `wiki-config.json` inside the KB folder and registers the QMD collection.
+6. Drop source documents (markdown, PDF) into `<kb-root>/raw/` and run `/ingest <filename>`.
 
-The `knowledge-base/raw/` and `knowledge-base/wiki/` directories are created automatically on first use. The `knowledge-base/` folder is a separate git repository for wiki content.
+Re-running `/setup` is safe. Run it again whenever you rename or move the KB folder.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
+| `/setup <path>` | Configure the KB root folder and initialize the QMD search index — run once before first use |
 | `/ingest <path>` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview |
 | `/query <question>` | Research a question using wiki knowledge + active web research, then update the wiki with discoveries |
 | `/wiki <question>` | Search the wiki only (no web research) — fast internal lookup |
@@ -30,15 +46,16 @@ The `knowledge-base/raw/` and `knowledge-base/wiki/` directories are created aut
 
 ## How it works
 
-**Three layers:**
+**Four layers:**
 
-- **Raw sources** (`knowledge-base/raw/`) — your curated source documents. Immutable — the LLM reads but never modifies them.
-- **The wiki** (`knowledge-base/wiki/`) — LLM-generated markdown pages: source summaries, entity pages, concept pages, analyses, an overview, and an index. The LLM owns this entirely.
+- **Raw sources** (`<kb-root>/raw/`) — your curated source documents. Immutable — the LLM reads but never modifies them.
+- **The wiki** (`<kb-root>/wiki/`) — LLM-generated markdown pages: source summaries, entity pages, concept pages, analyses, an overview, and an index. The LLM owns this entirely.
+- **The search index** (QMD) — a local semantic index over `<kb-root>/wiki/`. Commands query it to find relevant pages before reading them, so operations stay fast as the wiki grows.
 - **The schema** (`CLAUDE.md`) — tells the LLM how the wiki is structured, what conventions to follow, and how to operate. You and the LLM co-evolve this over time.
 
 ## Browsing the wiki
 
-The wiki is designed to work with [Obsidian](https://obsidian.md/) — open the `knowledge-base/wiki/` folder as a vault to get graph view, backlinks, and live navigation. It also works as plain markdown files in any editor.
+The wiki is designed to work with [Obsidian](https://obsidian.md/) — open the `<kb-root>/wiki/` folder as a vault to get graph view, backlinks, and live navigation. It also works as plain markdown files in any editor.
 
 ## Credits
 
