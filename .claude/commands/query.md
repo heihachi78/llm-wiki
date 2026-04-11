@@ -6,8 +6,18 @@ You are the **query agent** for a research wiki. Your job is to answer research 
 
 Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
+### Preamble: Resolve KB root and QMD availability
+
+1. Check for `.claude/wiki-config.json`. If it exists, read `root` and `collection` from it. If not, use `root = <absolute path to project root>/knowledge-base/` and `collection = wiki`.
+2. Use `<root>/` everywhere in this command instead of `knowledge-base/`.
+3. Check QMD availability:
+   ```bash
+   which qmd > /dev/null 2>&1
+   ```
+   If QMD is not available, skip all QMD steps and note `[QMD not available — semantic steps skipped]` once in your response.
+
 ### Step 1: Understand existing knowledge
-Read `knowledge-base/wiki/index.md` to find pages relevant to the question in `$ARGUMENTS`. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — research queries work best when there's existing wiki context to build on.
+Read `<root>/wiki/index.md` to find pages relevant to the question in `$ARGUMENTS`. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — research queries work best when there's existing wiki context to build on.
 
 Read the most relevant wiki pages to understand what the wiki already knows about this topic.
 
@@ -17,6 +27,12 @@ Based on the question and existing wiki content, identify:
 - What's missing or unclear
 - What claims might need verification
 - What additional context would strengthen the answer
+
+**If QMD available:** additionally run:
+```bash
+qmd query "<question from $ARGUMENTS>" -c <collection> -n 10 --json
+```
+A page returned by QMD with high relevance is treated as existing knowledge — this reduces false gap identification for topics covered in the wiki under different terminology.
 
 ### Step 3: Active research
 Spawn research subagents (using the Agent tool) to investigate knowledge gaps. Each subagent should have a focused research task:
@@ -38,18 +54,26 @@ Present the answer to the user.
 
 ### Step 5: Update the wiki
 With the new information gathered during research:
-- **Create or update concept pages** in `knowledge-base/wiki/concepts/` for newly discovered ideas or methods
-- **Create or update entity pages** in `knowledge-base/wiki/entities/` for newly discovered people, tools, or organizations
+- **Create or update concept pages** in `<root>/wiki/concepts/` for newly discovered ideas or methods
+- **Create or update entity pages** in `<root>/wiki/entities/` for newly discovered people, tools, or organizations
 - **Update existing pages** that the research revealed to be incomplete or outdated
 - **Update cross-references** across all touched pages
 - **Flag contradictions** where new research conflicts with existing wiki content
 
+### QMD re-index (after Step 5, before Step 6)
+If QMD available, re-index immediately after all page writes so the index reflects updated semantics:
+```bash
+qmd update -c <collection>
+qmd embed
+```
+Note: `qmd embed` has no `-c` flag — it embeds all collections. This step is critical in `/query` because updated pages may have significantly changed semantics.
+
 ### Step 6: Update overview
-Read `knowledge-base/wiki/overview.md`. If this research changes the big picture — introduces a new major theme, challenges an existing thesis, or fills a significant gap — update the overview accordingly. If it's a minor addition, leave the overview as-is.
+Read `<root>/wiki/overview.md`. If this research changes the big picture — introduces a new major theme, challenges an existing thesis, or fills a significant gap — update the overview accordingly. If it's a minor addition, leave the overview as-is.
 
 ### Step 7: Update index and log
-Add entries for all new pages to `knowledge-base/wiki/index.md`. Update summaries of modified pages.
-Append to `knowledge-base/wiki/log.md`:
+Add entries for all new pages to `<root>/wiki/index.md`. Update summaries of modified pages.
+Append to `<root>/wiki/log.md`:
 ```
 ## [YYYY-MM-DD] query | Brief question summary
 Researched and synthesized answer. Created/updated N pages.
@@ -57,9 +81,9 @@ Key finding: most important discovery in one sentence.
 ```
 
 ### Step 8: Offer to file the analysis
-Ask the user if the synthesized answer should be saved as a page in `knowledge-base/wiki/analyses/`. If yes:
+Ask the user if the synthesized answer should be saved as a page in `<root>/wiki/analyses/`. If yes:
 - Create the page with standard analysis format (frontmatter, Summary, Findings, Methodology, Sources)
-- Update `knowledge-base/wiki/index.md` with the new analysis entry
+- Update `<root>/wiki/index.md` with the new analysis entry
 - Add cross-references from the analysis to all relevant pages (and vice versa)
 
 ### Important

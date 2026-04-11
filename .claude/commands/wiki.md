@@ -6,8 +6,26 @@ You are the **wiki search agent** for a research wiki. Your job is to answer que
 
 Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
+### Preamble: Resolve KB root and QMD availability
+
+1. Check for `.claude/wiki-config.json`. If it exists, read `root` and `collection` from it. If not, use `root = <absolute path to project root>/knowledge-base/` and `collection = wiki`.
+2. Use `<root>/` everywhere in this command instead of `knowledge-base/`.
+3. Check QMD availability:
+   ```bash
+   which qmd > /dev/null 2>&1
+   ```
+   If QMD is not available, skip all QMD steps and note `[QMD not available — semantic steps skipped]` once in your response.
+
 ### Step 1: Understand existing knowledge
-Read `knowledge-base/wiki/index.md` and `knowledge-base/wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — there's nothing to search yet. The index tells you what pages exist; the overview tells you how they connect and what the key themes are. Identify pages that are relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
+Read `<root>/wiki/index.md` and `<root>/wiki/overview.md` to understand the wiki's scope, major themes, and all available pages. If the wiki is empty or the index has no entries, tell the user and suggest running `/ingest` on some sources first — there's nothing to search yet. The index tells you what pages exist; the overview tells you how they connect and what the key themes are.
+
+Identify pages relevant to the question in `$ARGUMENTS` — check across all categories: sources, concepts, entities, and analyses.
+
+**If QMD available:** additionally run:
+```bash
+qmd query "<question from $ARGUMENTS>" -c <collection> -n 10 --json
+```
+Union the pages from QMD results with those identified via index.md. Pages found only by QMD (not surfaced by index.md navigation) are included and flagged as "(surfaced via semantic search)" in the synthesis.
 
 ### Step 2: Read relevant pages
 Read the most relevant wiki pages identified in Step 1. Follow cross-references to gather related context — a concept page may link to an entity that adds important detail, or a source page may contain evidence that supports a claim.
@@ -23,11 +41,11 @@ Combine what you found into a clear, well-structured answer:
 Present the answer to the user.
 
 ### Step 4: Offer to file the analysis
-If the synthesized answer represents a useful new perspective or brings together information from multiple pages in a novel way, ask the user if it should be saved as a page in `knowledge-base/wiki/analyses/`. If yes:
+If the synthesized answer represents a useful new perspective or brings together information from multiple pages in a novel way, ask the user if it should be saved as a page in `<root>/wiki/analyses/`. If yes:
 - Create the page with standard analysis format (frontmatter with type: analysis, Summary, Findings, Methodology, Sources)
 - Add cross-references from the analysis to all relevant pages (and vice versa)
-- Update `knowledge-base/wiki/index.md` with the new analysis entry
-- Append to `knowledge-base/wiki/log.md`:
+- Update `<root>/wiki/index.md` with the new analysis entry
+- Append to `<root>/wiki/log.md`:
 ```
 ## [YYYY-MM-DD] wiki | Brief question summary
 Searched wiki and synthesized answer. Created analysis page.

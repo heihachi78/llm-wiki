@@ -2,10 +2,16 @@
 
 This is a research wiki maintained by Claude Code. The wiki is a persistent, compounding knowledge base — structured, interlinked markdown files that sit between the user and raw source documents. The LLM builds and maintains all wiki pages. The user curates sources, asks questions, and directs the analysis.
 
+## Setup
+
+Run `/setup <path>` once before first use to configure the KB root folder and initialise the QMD search index. Re-run if you rename or move the KB folder.
+
+The KB root is stored in `.claude/wiki-config.json`. All wiki commands read this file to resolve paths. If the file does not exist, commands default to `knowledge-base/` in the project root.
+
 ## Directory Structure
 
 ```
-knowledge-base/           # Separate git repo for wiki content
+<kb-root>/                # KB root folder — any name, configured via /setup
   raw/                    # Immutable source documents (never modify these)
     assets/               # Downloaded images referenced by sources
   wiki/                   # LLM-generated wiki pages (you own this entirely)
@@ -61,6 +67,7 @@ date_updated: YYYY-MM-DD
 
 ## Available Commands
 
+- `/setup <path>` — Configure KB root folder and initialise QMD search index (run once before first use)
 - `/ingest` — Process a new source document into the wiki
 - `/query` — Ask a research question (with active web research)
 - `/wiki` — Search the wiki for answers (wiki-only, no web research)
@@ -69,7 +76,7 @@ date_updated: YYYY-MM-DD
 
 ## Workflow Tips
 
-- Always read `knowledge-base/wiki/index.md` before any operation to understand current wiki state
-- After any operation that modifies wiki pages, update both `knowledge-base/wiki/index.md` and `knowledge-base/wiki/log.md`
+- Always read `<kb-root>/wiki/index.md` before any operation to understand current wiki state
+- After any operation that modifies wiki pages, update both `<kb-root>/wiki/index.md` and `<kb-root>/wiki/log.md`
 - When in doubt about emphasis or interpretation, ask the user
 - The wiki should be browsable and useful on its own — write for a human reader, not just for retrieval
