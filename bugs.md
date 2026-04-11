@@ -31,3 +31,12 @@
 - **Problem:** `concepts/percolation-theory-network-resilience.md` and `analyses/network-resilience-analysis.md` are twin pages (formal theory vs. applied synthesis of the same topic) and did not link to each other. The first lint pass did not flag this weak cross-reference even though both pages existed at the time.
 - **Context:** First lint pass (2026-04-10). Missing link detected and fixed by second lint pass.
 - **Status:** Open
+
+## [2026-04-11] Bug Report
+
+### Issue 5: `/ingest` file listing doesn't indicate already-ingested sources
+- **Command:** /ingest
+- **Severity:** Low
+- **Problem:** When invoked with no arguments, the agent listed all raw files without cross-referencing the wiki index to identify which had already been ingested. The user had to ask a follow-up question to get that information, requiring an extra round-trip.
+- **Context:** `/ingest` called with no arguments; wiki already had 4 ingested sources at the time.
+- **Status:** Open
