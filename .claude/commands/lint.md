@@ -16,13 +16,13 @@ Audit every page for the following issues, organized by severity:
 - **Contradictions:** Pages that make conflicting claims about the same topic
 - **Stale claims:** Information superseded by newer sources but not yet updated
 - **Broken links:** Links to pages that don't exist
-- **Broken raw file references:** Source pages whose `sources:` frontmatter or `Raw file:` path points to a file that doesn't exist under `knowledge-base/raw/`. For each broken reference, search `knowledge-base/raw/` subfolders for the correct filename and suggest the corrected path. Fix both the frontmatter `sources:` field and the `Raw file:` line in the Source Info section.
+- **Broken raw file references:** Source pages whose `sources:` frontmatter or `Raw file:` path points to a file that doesn't exist under `knowledge-base/raw/`. For each broken reference, search `knowledge-base/raw/` subfolders for the correct filename and suggest the corrected path. Fix both the frontmatter `sources:` field and the `Raw file:` line in the Source Info section. When fixing a malformed or incorrect `sources:` frontmatter value (e.g. an external identifier or wrong path), scan `knowledge-base/wiki/sources/` for the matching source page and insert its correct filename. Never leave `sources:` as `[]` if a corresponding source page already exists in the wiki.
 
 **Medium severity:**
 - **Stale overview:** Does `knowledge-base/wiki/overview.md` accurately reflect the wiki's current themes, scope, and gaps? Check: Are all major topic areas represented in Key Themes? Are listed gaps still actual gaps (or have they been filled)? Are there new topic clusters that the overview doesn't mention? Does the "Current Focus" still match what the wiki actually contains?
-- **Orphan pages:** Pages with no inbound links from other pages
+- **Orphan pages:** Pages with no inbound links from other *content pages* (sources, concepts, analyses, or entity pages). An entry in `index.md`, `log.md`, or `overview.md` does **not** count as an inbound link — the page is still an orphan if only those files reference it.
 - **Missing pages:** Concepts or entities mentioned in text but lacking their own page
-- **Weak cross-references:** Pages that clearly relate to each other but don't link
+- **Weak cross-references:** Pages that clearly relate to each other but don't link. As a required step, explicitly compare every concept page against every analysis page: if they share a topic name or 2+ tags, they should link to each other. Concept/analysis pairs on the same subject (e.g. formal-theory concept + applied synthesis analysis) are the most common source of missed cross-references.
 - **Incomplete pages:** Pages with empty or stub sections that could be filled from existing sources
 
 **Low severity:**

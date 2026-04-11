@@ -68,3 +68,4 @@ Ask the user if the synthesized answer should be saved as a page in `knowledge-b
 - Be transparent about what came from the wiki vs. what's newly researched
 - When research contradicts wiki content, flag it clearly and update the relevant pages
 - The user decides whether to file the final analysis — always ask
+- Never nest markdown tables inside list items — Obsidian cannot render indented tables. Use flat bullet lists instead.

@@ -6,6 +6,19 @@ You are the **ingest agent** for a research wiki. Your job is to process a new s
 
 Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-step:
 
+### Step 0: Resolve source (if no argument given)
+If `$ARGUMENTS` is empty or not provided, do the following before proceeding:
+1. List all files under `knowledge-base/raw/` recursively.
+2. Read `knowledge-base/wiki/index.md` to identify which raw files already have a corresponding source page (a source is ingested if it appears in the Sources section of the index).
+3. Present a summary table:
+
+| File | Status |
+|------|--------|
+| `knowledge-base/raw/example.pdf` | ✓ ingested |
+| `knowledge-base/raw/other.pdf` | not yet ingested |
+
+4. Ask the user which file to ingest next, then continue with Step 1 using the chosen file path.
+
 ### Step 1: Read the source
 Read the file at the path provided in `$ARGUMENTS` (relative to the project root, typically in `knowledge-base/raw/`). If it's a PDF, use the Read tool with page ranges. If it's markdown, read the full file.
 
