@@ -93,3 +93,5 @@ Ask the user if the synthesized answer should be saved as a page in `<root>/wiki
 - When research contradicts wiki content, flag it clearly and update the relevant pages
 - The user decides whether to file the final analysis — always ask
 - Never nest markdown tables inside list items — Obsidian cannot render indented tables. Use flat bullet lists instead.
+- You can always go back to the raw source files and read them, because its not guaranteed, that all the important information from the original source file is present in the wiki.
+
