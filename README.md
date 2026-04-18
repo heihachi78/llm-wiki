@@ -29,20 +29,22 @@ Without QMD, the wiki commands will fail at their search steps.
 3. Open it with [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 4. Create your KB folder with `raw/` and `wiki/` subdirectories. The folder can be named anything — e.g. `knowledge-base/`, `my-research/`, `pemik-wiki/`.
 5. Run `/setup <path-to-kb-folder>` once. This writes `wiki-config.json` inside the KB folder and registers the QMD collection.
-6. Drop source documents (markdown, PDF) into `<kb-root>/raw/` and run `/ingest <filename>`.
+6. Drop source documents (markdown, PDF) into `<kb-root>/raw/` and run `/ingest <filename>` (or just `/ingest` to list unprocessed files).
 
 Re-running `/setup` is safe. Run it again whenever you rename or move the KB folder.
+
+Multiple KBs can coexist as sibling folders in the project — each with its own `wiki-config.json`. Commands auto-discover them and disambiguate from context.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
 | `/setup <path>` | Configure the KB root folder and initialize the QMD search index — run once before first use |
-| `/ingest <path>` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview |
+| `/ingest [path]` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview. Omit the path to list unprocessed files in `raw/` |
 | `/query <question>` | Research a question using wiki knowledge + active web research, then update the wiki with discoveries |
 | `/wiki <question>` | Search the wiki only (no web research) — fast internal lookup |
 | `/lint` | Health-check the wiki for broken links, contradictions, orphan pages, missing cross-references |
-| `/bug` | Review the current session for wiki command issues and log them to `bugs.md` |
+| `/bug` | Review the current session for wiki command issues and log them to `bugs.md` — commands read this file before editing, so fixes compound |
 
 ## How it works
 
