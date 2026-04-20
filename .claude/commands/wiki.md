@@ -52,6 +52,10 @@ Searched wiki and synthesized answer. Created analysis page.
 Key finding: most important insight in one sentence.
 ```
 
+### Step 5: Update overview (if needed)
+Read `<root>/wiki/overview.md`. If this search changes the big picture, clarifies an open question or contradiction, adds a new dimension to a major theme, challenges an existing thesis, or fills a significant gap — update the overview accordingly.
+It's not mandatory to update the overview if the result of the search does not add real value (a new insight, perspective, etc.) to the existing overview or the synthesized information does not help to better understand the big picture.
+
 ### Important
 - **Do not use WebSearch or WebFetch** — this command works exclusively from wiki content
 - Do not create or update concept, entity, or source pages — this command only reads existing pages and optionally creates analysis pages
