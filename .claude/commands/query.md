@@ -53,12 +53,14 @@ Combine wiki knowledge and new research into a comprehensive answer:
 Present the answer to the user.
 
 ### Step 5: Update the wiki
-With the new information gathered during research:
-- **Create or update concept pages** in `<root>/wiki/concepts/` for newly discovered ideas or methods
-- **Create or update entity pages** in `<root>/wiki/entities/` for newly discovered people, tools, or organizations
-- **Update existing pages** that the research revealed to be incomplete or outdated
-- **Update cross-references** across all touched pages
-- **Flag contradictions** where new research conflicts with existing wiki content
+With the new information gathered during research, apply the source-fidelity rules in CLAUDE.md. Web-research results *are* allowed to introduce new claims — that's the point of `/query` — but each new claim must be attributable to the URL it came from, and existing source-derived content must not be silently rewritten.
+
+- **Create or update concept pages** in `<root>/wiki/concepts/` for newly discovered ideas or methods. Tie each new claim to the web source it came from (e.g. `According to <url>, ...`) so wiki-internal vs. web-derived content stays distinguishable.
+- **Create or update entity pages** in `<root>/wiki/entities/` for newly discovered people, tools, or organizations — only those actually named in the research output, not extrapolations.
+- **Update existing pages** that the research revealed to be incomplete or outdated. When extending a page, *add* new web-attributed material; do not paraphrase or "tidy up" prior source-derived content.
+- **Update cross-references** across all touched pages.
+- **Flag contradictions** where new research conflicts with existing wiki content. Do not resolve contradictions by silently editing the older content — surface them.
+- **No invented quotes.** If you write a `> "..."` block, it must be a verbatim copy from the wiki source page or the web source you actually fetched. Do not reconstruct quotes from memory.
 
 ### QMD re-index (after Step 5, before Step 6)
 If QMD available, re-index immediately after all page writes so the index reflects updated semantics:

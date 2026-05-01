@@ -42,26 +42,26 @@ Present the user with:
 Ask the user what to emphasize and whether anything should be highlighted or de-emphasized.
 
 ### Step 3: Create source summary page
-Create a page in `<root>/wiki/sources/` with the standard source page format:
+Create a page in `<root>/wiki/sources/` with the standard source page format. **Re-read the relevant passages from the raw file as you write each section** — do not write from memory of Step 1. Apply the source-fidelity rules in CLAUDE.md throughout.
+
 - Frontmatter: title, type: source, tags, sources (self-referencing the raw file), dates
 - Sections: Summary, Key Findings, Key Quotes, Methodology (if applicable), Relevance, Contradictions, Source Info
-- Key Quotes: 3-5 notable direct quotes from the source, each with brief context (e.g. `> "Quote here" — context about why this matters`)
-- Contradictions: explicit section listing any conflicts with existing wiki content. If none, write "No contradictions identified." This gives contradiction tracking a permanent home rather than relying on inline flags.
-- Source Info should include: author(s), date, URL/DOI if available, file path to raw source
+- **Summary / Key Findings / Methodology / Relevance:** every claim must come from the source. Prefer the source's own phrasing over rewording. Do not introduce background context, definitions, or inferred conclusions that are not on the page you read.
+- **Key Quotes:** up to 3-5 *verbatim* quotes from the source. Each `> "..."` must be a literal copy-paste from the raw file — same wording, same punctuation. **Verify each quote by locating it in the source before you write it.** If the source yields fewer than 3 strong verbatim quotes, include only what's actually there (even zero) and write `None in source.` or `Only N verbatim quote(s) found.` rather than padding with reconstructed or paraphrased "quotes". Never wrap a paraphrase in quotation marks.
+- **Contradictions:** explicit section listing any conflicts with existing wiki content. If none, write "No contradictions identified." This gives contradiction tracking a permanent home rather than relying on inline flags.
+- **Source Info:** author(s), date, URL/DOI if available, file path to raw source — only fields actually present in the source. If the author or date is not stated in the document, write `unknown` rather than guessing.
 
 ### Step 4: Identify and update entities
-Scan the source for notable entities (people, organizations, tools, datasets, projects).
-For each entity:
+Scan the source for notable entities (people, organizations, tools, datasets, projects) **that are actually named or described in the source**. Do not extrapolate to related entities the source does not mention. For each entity:
 - **If QMD available:** run `qmd vsearch "<entity name>" -c <collection> -n 3 --json` before deciding whether to create a new page. If a top result clearly matches the candidate entity, update that existing page rather than creating a duplicate.
-- If a page exists in `<root>/wiki/entities/`: update it with new information from this source, add the source to its sources list, update cross-references
-- If no page exists: create a new entity page with the standard entity format
+- If a page exists in `<root>/wiki/entities/`: update it only with information actually present in this source, add the source to its sources list, update cross-references. Do not enrich the page with general knowledge about the entity that this particular source does not provide.
+- If no page exists: create a new entity page. The page should describe the entity *as the source describes it* — not a Wikipedia-style summary from prior knowledge. If the source only mentions the entity in passing, the page can be brief; that's fine.
 
 ### Step 5: Identify and update concepts
-Scan the source for key concepts (ideas, theories, methods, frameworks, techniques).
-For each concept:
+Scan the source for key concepts (ideas, theories, methods, frameworks, techniques) **that the source actually discusses**. Do not invent concept pages for ideas merely *adjacent* to the source's topic. For each concept:
 - **If QMD available:** run `qmd vsearch "<concept name>" -c <collection> -n 3 --json` before deciding whether to create a new page. If the top result looks like the same concept, update it rather than creating a duplicate.
-- If a page exists in `<root>/wiki/concepts/`: integrate new information, add source, update cross-references
-- If no page exists: create a new concept page with the standard concept format
+- If a page exists in `<root>/wiki/concepts/`: integrate only what this source contributes (new definitions, examples, critiques, etc., that are in the source), add the source to the sources list, update cross-references. Do not rewrite existing claims using prior knowledge under cover of "integration".
+- If no page exists: create a new concept page using the source's own framing and wording. Quote definitions verbatim where useful.
 
 ### Step 6: Update cross-references
 Review all pages you created or modified. Ensure:

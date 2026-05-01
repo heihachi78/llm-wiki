@@ -31,12 +31,14 @@ Union the pages from QMD results with those identified via index.md. Pages found
 Read the most relevant wiki pages identified in Step 1. Follow cross-references to gather related context — a concept page may link to an entity that adds important detail, or a source page may contain evidence that supports a claim.
 
 ### Step 3: Synthesize answer
-Combine what you found into a clear, well-structured answer:
-- Lead with a direct answer to the question
-- Support with evidence from wiki pages, citing them with relative links
+Combine what you found into a clear, well-structured answer. Apply the source-fidelity rules in CLAUDE.md: this command must not introduce facts beyond what the wiki pages actually say, and must not invent quotes.
+
+- Lead with a direct answer to the question, grounded in the wiki pages you read.
+- Support with evidence from wiki pages, citing them with relative links. Quote pages verbatim where exact wording matters; do not reword wiki content into stronger or more confident claims than the page states.
+- Do not supplement gaps with prior knowledge — if the wiki does not cover something, say so.
 - Note confidence level — is the wiki comprehensive on this topic, or are there gaps?
-- If the wiki has contradictions on this topic, surface them explicitly
-- If there are significant knowledge gaps, suggest the user run `/query $ARGUMENTS` for web-augmented research
+- If the wiki has contradictions on this topic, surface them explicitly.
+- If there are significant knowledge gaps, suggest the user run `/query $ARGUMENTS` for web-augmented research.
 
 Present the answer to the user.
 

@@ -88,6 +88,21 @@ concepts/      # Ideas, theories, methods, frameworks
 analyses/      # Comparisons, syntheses, filed query outputs
 ```
 
+## Source fidelity (read this before writing any wiki page)
+
+The wiki must reflect the source material, not the LLM's prior knowledge. Hallucinated quotes and invented details are the single biggest failure mode. Treat the following as hard rules:
+
+- **Quotes are verbatim.** A `> "..."` block must be a literal substring of the source — copy-paste, not reconstruction. If you cannot copy it directly from the source you read, do not present it as a quote. Paraphrase in plain prose instead, with no quotation marks.
+- **Every factual claim attributed to a source must be in that source.** Names, numbers, dates, definitions, methodology details, conclusions — if it is not in the source you read, do not write it. Do not "fill in" plausible context from background knowledge.
+- **Stay close to the source's own wording.** Tight paraphrase or direct quotation is preferred over reformulation. When in doubt, quote verbatim — even copying a full sentence is better than introducing drift via synonyms, generalizations, or stylistic rewrites.
+- **No invented entities or concepts.** Only create entity/concept pages for things actually named or described in the source. Do not extrapolate to "related" people, tools, or ideas the source does not mention.
+- **Honest empty sections.** If a section (Key Quotes, Methodology, Contradictions, etc.) has no material in the source, write `None in source.` (or equivalent). Do not pad sections to look complete.
+- **Uncertainty must be visible.** If you are not sure a claim is in the source, either re-read to verify, or omit it. Never guess.
+- **Web research is the only exception.** During `/query`, information from web searches *is* allowed to introduce new claims — but each such claim must be attributed to its external URL/source on the page where it lands, not silently merged into existing source-derived content. Wiki content originating from `<root>/raw/` and wiki content originating from web research must remain distinguishable (e.g. `According to <url>, ...`).
+- **When integrating into existing pages,** apply the same rule: a new source can only justify additions that are actually in that new source. Do not "tidy up" or rewrite existing claims using the new source as cover.
+
+If a step in a command would naturally produce content not present in the source (e.g. "give 3-5 quotes" but the source yields only 1), produce only what the source supports and say so. Under-filling is correct; fabricating is not.
+
 ## Conventions
 
 - **Filenames:** kebab-case (`transformer-architecture.md`).
