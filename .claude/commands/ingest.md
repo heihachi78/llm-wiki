@@ -78,12 +78,14 @@ Scan the source for notable entities (people, organizations, tools, datasets, pr
 - **If QMD available:** run `qmd vsearch "<entity name>" -c <collection> -n 3 --json` before deciding whether to create a new page. If a top result clearly matches the candidate entity, update that existing page rather than creating a duplicate.
 - If a page exists in `<root>/wiki/entities/`: update it only with information actually present in this source, add the source to its sources list, update cross-references. Do not enrich the page with general knowledge about the entity that this particular source does not provide.
 - If no page exists: create a new entity page. The page should describe the entity *as the source describes it* — not a Wikipedia-style summary from prior knowledge. If the source only mentions the entity in passing, the page can be brief; that's fine.
+- **No source-internal locators on entity pages.** Slide / page / section / timestamp references belong on the source page only. Attribute claims to a source by wiki-link (`[01 DM Bevezetés](../sources/01-dm-bevezetes.md)`), never `(slide N)` — see CLAUDE.md "Cross-page attribution".
 
 ### Step 5: Identify and update concepts
 Scan the source for key concepts (ideas, theories, methods, frameworks, techniques) **that the source actually discusses**. Do not invent concept pages for ideas merely *adjacent* to the source's topic. For each concept:
 - **If QMD available:** run `qmd vsearch "<concept name>" -c <collection> -n 3 --json` before deciding whether to create a new page. If the top result looks like the same concept, update it rather than creating a duplicate.
 - If a page exists in `<root>/wiki/concepts/`: integrate only what this source contributes (new definitions, examples, critiques, etc., that are in the source), add the source to the sources list, update cross-references. Do not rewrite existing claims using prior knowledge under cover of "integration".
 - If no page exists: create a new concept page using the source's own framing and wording. Quote definitions verbatim where useful.
+- **No source-internal locators on concept pages.** Slide / page / section / timestamp references belong on the source page only. Attribute claims to a source by wiki-link (`[01 DM Bevezetés](../sources/01-dm-bevezetes.md)`), never `(slide N)` — see CLAUDE.md "Cross-page attribution".
 
 ### Step 6: Update cross-references
 Review all pages you created or modified. Ensure:

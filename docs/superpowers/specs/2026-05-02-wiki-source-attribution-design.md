@@ -2,7 +2,11 @@
 
 **Date:** 2026-05-02
 **Status:** Approved (user)
-**Affects:** `CLAUDE.md`, `.claude/commands/ingest.md`, all existing wiki concept and entity pages in active and future KBs.
+**Affects:** `CLAUDE.md`, `.claude/commands/ingest.md`. (Originally also covered remediation of existing wiki pages — see "Scope reduction" note below.)
+
+## Scope reduction (2026-05-02)
+
+Sections C (remediation of existing wiki pages) and D (re-index + log) are **out of scope** per user direction after the spec was first approved: "you do not need to fix the current knowledge base. just fix the agent prompts." Existing pages in `machine-learning/wiki/` are left as-is. The convention applies prospectively to all future ingests via the updated `ingest.md` and `CLAUDE.md`.
 
 ## Problem
 

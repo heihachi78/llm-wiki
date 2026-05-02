@@ -117,6 +117,19 @@ The wiki must reflect the source material, not the LLM's prior knowledge. Halluc
 
 If a step in a command would naturally produce content not present in the source (e.g. "give 3-5 quotes" but the source yields only 1), produce only what the source supports and say so. Under-filling is correct; fabricating is not.
 
+## Cross-page attribution
+
+Source-internal locators — slide N, page N, section N, timestamp, line number — **may appear on source pages only.** Concept, entity, and analysis pages must never use them. Attribution from a concept/entity/analysis page to a source is by **wiki-link to its source page**; the `sources:` frontmatter list plus the source page itself is where slide-level provenance lives.
+
+Why: concept and entity pages are long-lived and accrue claims from multiple sources over time. A bare `(slide 11)` is unambiguous on a source page (1-1 with one source) but rots silently on a multi-source concept page where "slide 11" could mean any of them.
+
+Examples:
+- ✅ `[01 DM Bevezetés](../sources/01-dm-bevezetes.md) defines the field as the extraction of patterns…`
+- ❌ `Slide 11 defines the field as…`
+- ❌ `### Worked example: market segmentation (slide 32)` — drop the `(slide 32)`.
+
+Verbatim quotes are still required and welcome on concept/entity pages — just attribute them to a source link, not a slide.
+
 ## Conventions
 
 - **Filenames:** kebab-case (`transformer-architecture.md`).
