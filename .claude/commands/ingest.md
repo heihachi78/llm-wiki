@@ -8,13 +8,9 @@ Read CLAUDE.md first for wiki conventions, then follow this workflow step-by-ste
 
 ### Preamble: Resolve KB root and QMD availability
 
-1. Discover the wiki config by searching the project for a file named `wiki-config.json` — use Glob with patterns `*/wiki-config.json` and `*/*/wiki-config.json` from the project root. If found, set `root` to the directory containing that file (the config's own parent directory) and read `collection` from its JSON contents. If not found, default to `root = <project root>/knowledge-base/` and `collection = wiki`, and suggest the user run `/setup <path>`.
-2. Use `<root>/` everywhere in this command instead of `knowledge-base/`.
-3. Check QMD availability:
-   ```bash
-   which qmd > /dev/null 2>&1
-   ```
-   If QMD is not available, skip all QMD steps and note `[QMD not available — semantic steps skipped]` once in your response.
+Follow the **KB resolution rule** in `CLAUDE.md` (section "KB root resolution"). It defines steps 1-4 (read `.claude/active-kb`; handle stale pointer; auto-detect via glob with zero / one / many cases; check QMD availability). The result of those steps is `<root>` (KB folder), `<collection>` (QMD collection name), and a boolean for QMD availability.
+
+Use `<root>/` everywhere in this command. If QMD is not available, skip all QMD steps and note `[QMD not available — semantic steps skipped]` once in your response.
 
 ### Step 0: Resolve source (if no argument given)
 If `$ARGUMENTS` is empty or not provided, do the following before proceeding:
