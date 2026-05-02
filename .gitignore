@@ -11,6 +11,7 @@ Thumbs.db
 .claude/settings.json
 .claude/plans/
 .claude/memory/
+.claude/active-kb
 
 # Development notes
 idea.md
