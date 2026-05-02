@@ -148,6 +148,6 @@ Write `.claude/active-kb` (relative to the project root) with the value `<collec
 Tell the user: "Setup complete. All wiki commands will now use `<root>/`. Active KB set to `<collection>`."
 
 ## Important
-- Re-running `/setup` is safe — it overwrites the config (inside the KB folder) and updates the QMD context without duplicating the collection.
+- Re-running `/setup` is safe — it overwrites the config (inside the KB folder), updates the QMD context without duplicating the collection, and re-creates only those wiki scaffold files (`index.md`, `overview.md`, `log.md`, and the `wiki/{sources,entities,concepts,analyses}/` subdirectories) that are currently missing. Files and directories that already exist are left untouched.
 - Run `/setup` again whenever you rename or move the KB folder.
 - If QMD is not installed, Steps 5–7 will fail. Install it first: `npm install -g @tobilu/qmd` or `bun install -g @tobilu/qmd`.
