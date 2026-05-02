@@ -14,8 +14,9 @@ Two roles to keep distinct:
 
 ```
 .claude/
-  commands/          # Slash-command prompts — source of truth for /setup, /ingest, /query, /wiki, /lint, /bug
-  skills/qmd/        # QMD search skill wrapper
+  commands/          # Slash-command prompts — source of truth for /setup, /use, /ingest, /query, /wiki, /lint, /bug
+  skills/            # Skill wrappers used by commands (qmd for semantic search, plus obsidian-*, defuddle, json-canvas helpers)
+  active-kb          # Single-line basename pointer to the active KB (gitignored, per-clone; written only by /setup and /use)
   settings.local.json  # Allowlist for qmd CLI permissions
 CLAUDE.md            # This file — wiki schema + conventions (read by every command)
 README.md            # User-facing docs
@@ -134,7 +135,8 @@ If a step in a command would naturally produce content not present in the source
 
 ## Available slash commands
 
-- `/setup <path>` — Configure KB root and initialise QMD collection. Run once; re-run safely after renames.
+- `/setup <path>` — Configure KB root and initialise QMD collection. Run once; re-run safely after renames. Also sets the new KB as active.
+- `/use [name]` — Switch the active KB (`.claude/active-kb`) to `<name>`, or with no argument print the current pointer and the list of detected KBs. Canonical way to inspect or change the active KB.
 - `/ingest [path]` — Process a source into the wiki. With no argument, lists `<root>/raw/` cross-referenced against `index.md` and prompts.
 - `/query <question>` — Answer using wiki + active web research, then fold discoveries back into the wiki.
 - `/wiki <question>` — Wiki-only lookup; no web research.
