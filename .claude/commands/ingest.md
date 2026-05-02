@@ -12,6 +12,32 @@ Follow the **KB resolution rule** in `CLAUDE.md` (section "KB root resolution").
 
 Use `<root>/` everywhere in this command. If QMD is not available, skip all QMD steps and note `[QMD not available — semantic steps skipped]` once in your response.
 
+### Preamble (continued): Cross-KB check
+
+If `$ARGUMENTS` is non-empty (i.e. the operator gave a path), determine which KB owns the path:
+
+1. Resolve `$ARGUMENTS` to an absolute path.
+2. Walk up from that path's directory until a `wiki-config.json` is found, or until you reach the project root.
+3. If a `wiki-config.json` is found, the basename of its containing directory is `<source-kb>`. Otherwise (no ancestor wiki-config) `<source-kb>` is undefined.
+
+Then:
+
+- **`<source-kb>` undefined or equal to `<collection>`** — proceed with the active KB. (Common case: path is inside `<root>/raw/`, or path is unrelated to any KB and the operator wants it ingested into the active one.)
+- **`<source-kb>` is a different KB** — do **not** proceed silently. Print:
+  ```
+  This source lives in `<source-kb>`, but the active KB is `<collection>`.
+  Choose:
+    1. Switch active KB to `<source-kb>` and ingest there.
+    2. Ingest into `<source-kb>` just this once (do not change the active pointer).
+    3. Cancel.
+  ```
+  Wait for the operator's reply, then act:
+  - On `1`: write `<source-kb>` to `.claude/active-kb` (overwrite), re-resolve `<root>` and `<collection>` against `<source-kb>`, continue with Step 0+.
+  - On `2`: re-resolve `<root>` and `<collection>` against `<source-kb>` for this run only; do **not** modify `.claude/active-kb`. Continue with Step 0+.
+  - On `3`: stop. Make no file changes.
+
+Skip this block entirely if `$ARGUMENTS` is empty (Step 0 will handle source listing within the active KB).
+
 ### Step 0: Resolve source (if no argument given)
 If `$ARGUMENTS` is empty or not provided, do the following before proceeding:
 1. List all files under `<root>/raw/` recursively.
