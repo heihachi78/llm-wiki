@@ -18,11 +18,20 @@ Write `<root>/wiki-config.json` **inside the KB folder itself**:
   "collection": "<basename>"
 }
 ```
-The file's own location defines the KB root, so no `root` field is needed. Make sure `<root>/` exists before writing (Step 3 verifies its subdirectories).
+The file's own location defines the KB root, so no `root` field is needed. Make sure `<root>/` exists before writing (Step 3 creates the standard subdirectories if missing).
 
-### Step 3: Verify structure
-Check that `<root>/raw/` and `<root>/wiki/` both exist.
-- If either is missing, warn the user and ask whether to continue anyway.
+### Step 3: Create or verify structure
+Ensure the KB tree exists. From the project root:
+
+```bash
+mkdir -p <root>/raw
+mkdir -p <root>/wiki/sources
+mkdir -p <root>/wiki/entities
+mkdir -p <root>/wiki/concepts
+mkdir -p <root>/wiki/analyses
+```
+
+`mkdir -p` is idempotent — it creates missing directories and leaves existing ones untouched. If `<root>` itself is a relative path, resolve it against the project root first. If `<root>` does not exist as a folder yet, create it the same way.
 
 ### Step 4: Derive context description
 - If `<root>/wiki/overview.md` exists: read it and summarise the wiki's domain in 1–2 sentences for use as QMD context.
