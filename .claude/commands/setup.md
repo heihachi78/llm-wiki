@@ -33,6 +33,77 @@ mkdir -p <root>/wiki/analyses
 
 `mkdir -p` is idempotent — it creates missing directories and leaves existing ones untouched. If `<root>` itself is a relative path, resolve it against the project root first. If `<root>` does not exist as a folder yet, create it the same way.
 
+### Step 3.5: Seed wiki scaffolding (only if absent)
+
+For each of the three top-level wiki files below, check whether the file exists. If it does, leave it untouched. If it does not, create it with the seed content shown. This step must be idempotent — re-running `/setup` against a populated KB must not overwrite any existing content.
+
+**`<root>/wiki/index.md`** — only if it does not already exist:
+
+```markdown
+# Wiki Index
+
+Content catalog for this knowledge base. Every page belongs in exactly one section below. Each entry: `- [Title](path/to/page.md) — One-line summary`.
+
+## Sources
+
+_No sources ingested yet. Run `/ingest` to add one._
+
+## Entities
+
+_No entity pages yet._
+
+## Concepts
+
+_No concept pages yet._
+
+## Analyses
+
+_No analysis pages yet._
+```
+
+**`<root>/wiki/overview.md`** — only if it does not already exist:
+
+```markdown
+---
+title: "Wiki Overview"
+type: overview
+date_created: <YYYY-MM-DD>
+date_updated: <YYYY-MM-DD>
+---
+
+# Wiki Overview
+
+High-level synthesis of this knowledge base. Updated by `/ingest` and `/query` when new material changes the big picture.
+
+## Key Themes
+
+_None yet — this section will populate as sources are ingested._
+
+## Current Focus
+
+_No active focus declared yet._
+
+## Open Questions
+
+_None yet._
+
+## Gaps
+
+_None identified yet._
+```
+
+Substitute today's date (UTC) for both `<YYYY-MM-DD>` placeholders.
+
+**`<root>/wiki/log.md`** — only if it does not already exist:
+
+```markdown
+# Wiki Operation Log
+
+Chronological, append-only log of operations against this wiki.
+```
+
+(Step 8 below will append the first dated entry to this file.)
+
 ### Step 4: Derive context description
 - If `<root>/wiki/overview.md` exists: read it and summarise the wiki's domain in 1–2 sentences for use as QMD context.
 - If it does not exist: use `"<collection> research knowledge base"` as the description.
