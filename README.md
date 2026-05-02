@@ -33,13 +33,14 @@ Without QMD, the wiki commands will fail at their search steps.
 
 Re-running `/setup` is safe. Run it again whenever you rename or move the KB folder.
 
-Multiple KBs can coexist as sibling folders in the project — each with its own `wiki-config.json`. Commands auto-discover them and disambiguate from context.
+Multiple KBs can coexist as sibling folders in the project — each with its own `wiki-config.json`. Run `/setup <path>` to configure a new one (which also makes it active). Switch between configured KBs with `/use <name>`. Inspect the current active KB and the full list with `/use` (no argument). The active selection is stored in `.claude/active-kb` (gitignored, per-clone). When multiple KBs are configured and no pointer is set, commands prompt you to pick one for that run.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/setup <path>` | Configure the KB root folder and initialize the QMD search index — run once before first use |
+| `/setup <path>` | Configure the KB root folder, initialize the QMD search index, and set this KB as active — run once per KB before first use |
+| `/use [name]` | Switch the active KB to `<name>` (basename of a configured KB), or with no argument print the current active KB and the list of detected ones |
 | `/ingest [path]` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview. Omit the path to list unprocessed files in `raw/` |
 | `/query <question>` | Research a question using wiki knowledge + active web research, then update the wiki with discoveries |
 | `/wiki <question>` | Search the wiki only (no web research) — fast internal lookup |
