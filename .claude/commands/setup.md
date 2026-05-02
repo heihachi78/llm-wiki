@@ -61,8 +61,11 @@ Append to `<root>/wiki/log.md`:
 KB root set to <absolute-path>. QMD collection initialised.
 ```
 
-### Step 9: Confirm
-Tell the user: "Setup complete. All wiki commands will now use `<root>/`."
+### Step 9: Set as active KB
+Write `.claude/active-kb` (relative to the project root) with the value `<collection>` (the basename derived in Step 1) followed by a single trailing newline. Overwrite if it exists. This makes the just-configured KB the active one for subsequent commands. The pointer is gitignored — it does not appear in `git status`.
+
+### Step 10: Confirm
+Tell the user: "Setup complete. All wiki commands will now use `<root>/`. Active KB set to `<collection>`."
 
 ## Important
 - Re-running `/setup` is safe — it overwrites the config (inside the KB folder) and updates the QMD context without duplicating the collection.
