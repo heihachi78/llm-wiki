@@ -68,33 +68,31 @@ The new resolution rule, in order:
 3. Glob `*/wiki-config.json` and `*/*/wiki-config.json` from the project root:
    - **Zero hits** — suggest `/setup <path>`. Stop.
    - **Exactly one hit** — use it silently. (No prompt: the single-KB case must remain frictionless.)
-   - **Multiple hits** — print the list of detected KBs and ask the operator to either pick one for this run or run `/use <name>`. Stop until they answer. Do not write the pointer as a side-effect of step 3.
+   - **Multiple hits** — print a numbered list of detected KBs (basename + absolute path) and stop with a prompt: "Reply with the basename to use for this run, or run `/use <name>` to set it persistently." When the operator replies with a basename, treat it as a one-shot selection: resolve `<root>` and `<collection>` against that KB and continue, but do **not** write `.claude/active-kb`. The pointer is only written by `/use` and `/setup`.
 4. QMD availability check (unchanged from current preamble).
 
-This rule is the only place KB resolution lives. CLAUDE.md is updated (§5) so command authors reference one canonical description.
+This rule is the only place KB resolution lives. CLAUDE.md is updated (§5) to be the canonical, authoritative description; each command's preamble says "follow the KB resolution rule in CLAUDE.md" rather than duplicating the steps. This avoids drift between commands.
 
 ### 4. `/setup` and `/ingest` integrations
 
 **`/setup <path>`** — after the existing steps (write `wiki-config.json`, register the QMD collection, index, embed, log), add one final step: write the basename of `<path>` to `.claude/active-kb`. Setting up a KB is an explicit "I'm working on this" signal, so the pointer follows.
 
-**`/ingest <path>`** — after the standard preamble resolves the active KB, if the user-supplied `<path>` resolves into a *different* KB than the active one:
+**`/ingest <path>`** — after the standard preamble resolves the active KB, identify which KB owns `<path>` by walking up from `<path>` until a `wiki-config.json` is found.
 
-- Identify which KB owns the path by walking up from `<path>` until a `wiki-config.json` is found.
-- Print: "This source lives in `<other-kb>`, but the active KB is `<active-kb>`."
-- Ask the operator to choose:
+- **`<path>` is inside the active KB** (the common case, e.g. `term-int-foly-inf/raw/foo.pdf` with active = `term-int-foly-inf`) — silent fast path; no prompt. Proceed to ingest as today.
+- **`<path>` is inside a different KB** — print: "This source lives in `<other-kb>`, but the active KB is `<active-kb>`." Ask the operator to choose:
   1. Switch active KB to `<other-kb>` and ingest there (writes the pointer).
   2. Ingest into `<other-kb>` just this once without switching the pointer.
   3. Cancel.
-- Act on the choice. The previous behavior — silently writing wiki pages into whichever KB happened to be picked — must not occur.
-
-If `<path>` does not resolve into any known KB (no `wiki-config.json` ancestor), continue with the active KB as before. This handles the common case of `<path>` being inside `<active-kb>/raw/`.
+  Act on the choice. The previous behavior — silently writing wiki pages into whichever KB happened to be picked — must not occur.
+- **`<path>` is not inside any known KB** (no `wiki-config.json` ancestor) — continue with the active KB as before. (Treats free-floating paths as user-meant-active.)
 
 ### 5. Documentation updates
 
 **CLAUDE.md — "KB root resolution" section.** Replace the current paragraph with:
 
 - A short description of the active-KB pointer (`.claude/active-kb`, basename, gitignored).
-- The 4-step resolution rule from §3 verbatim, so command authors reading CLAUDE.md see exactly what every command does.
+- The 4-step resolution rule from §3 verbatim — this is the canonical, authoritative version. Each command's preamble references this section by name ("follow the KB resolution rule in CLAUDE.md") instead of duplicating the steps, so the rule lives in exactly one place.
 - A note that `/use` is the canonical way to switch and `/use` with no args is the canonical way to inspect.
 
 **README.md.**
