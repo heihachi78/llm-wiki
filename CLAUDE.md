@@ -35,9 +35,22 @@ Commands are prompt files, not scripts. To change behavior, edit the relevant fi
 
 ## KB root resolution (all commands)
 
-Commands locate the KB by globbing the project for `wiki-config.json` using patterns `*/wiki-config.json` and `*/*/wiki-config.json`. The file's **parent directory is the KB root**; the file contents are just `{ "collection": "<name>" }`. If no config is found, commands default to `knowledge-base/` in the project root with `collection = wiki` and suggest running `/setup`.
+The KB a command operates on is determined by `.claude/active-kb` — a single-line file containing the basename of the active KB folder (e.g. `term-int-foly-inf`). The basename is also the QMD collection name; they are 1:1.
 
-Multiple KBs can coexist in the project as sibling directories, each with its own `wiki-config.json`. Commands will find whichever the user intends via context (arguments, recent activity) or prompt if ambiguous.
+The pointer is local to each clone (gitignored — see `.gitignore`). It is written by `/use <name>` and by `/setup <path>`. No other command writes it.
+
+Every command that operates on a KB starts with this **resolution rule** — this section is the canonical version; commands reference it by name rather than duplicating it:
+
+1. **Read `.claude/active-kb`** if it exists. Trim the contents and treat them as `<kb-name>`. If `<kb-name>` is empty, contains a slash, or starts with `.` or `~`, print `.claude/active-kb should contain a single basename like 'term-int-foly-inf'; got '<value>'. Run /use <name> to fix.` and stop. Otherwise, if `<project-root>/<kb-name>/wiki-config.json` exists, set `<root>` to that directory and read `<collection>` from the JSON. Done.
+2. **Stale pointer.** If `.claude/active-kb` exists and is well-formed but `<project-root>/<kb-name>/` or its `wiki-config.json` is gone, print a one-line notice (`Active-KB pointer is stale: <kb-name> not found.`) and continue to step 3.
+3. **Auto-detect.** Glob `*/wiki-config.json` and `*/*/wiki-config.json` from the project root:
+   - **Zero hits** — suggest `/setup <path>`. Stop.
+   - **Exactly one hit** — use it silently. (No prompt; the single-KB case must remain frictionless.)
+   - **Multiple hits** — print a numbered list of detected KBs (basename + absolute path) and ask the operator: "Reply with the basename to use for this run, or run `/use <name>` to set it persistently." When the operator replies with a basename, treat it as a one-shot selection: resolve `<root>` and `<collection>` against that KB and continue, but do **not** write `.claude/active-kb`. The pointer is only written by `/use` and `/setup`.
+4. **QMD availability.** Check `which qmd > /dev/null 2>&1`. If unavailable, skip QMD steps in the calling command and note `[QMD not available — semantic steps skipped]` once.
+
+Pointer inspection and switching:
+- `/use` (with no arguments) is the canonical way to inspect the current pointer. `/use <name>` is the canonical way to switch.
 
 ## External dependency: QMD
 
