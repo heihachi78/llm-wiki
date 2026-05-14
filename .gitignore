@@ -13,6 +13,9 @@ Thumbs.db
 .claude/memory/
 .claude/active-kb
 
+# Codex local state
+.agents/active-kb
+
 # Development notes
 idea.md
 
@@ -25,4 +28,3 @@ felho-prog/
 reinforcement-learning-wiki/
 term-int-foly-inf/
 machine-learning/
-

@@ -1,0 +1,4 @@
+interface:
+  display_name: "LLM Wiki"
+  short_description: "Maintain QMD-indexed research wikis"
+  default_prompt: "Use $llm-wiki to work with the active research knowledge base."
