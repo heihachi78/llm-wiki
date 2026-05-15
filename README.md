@@ -37,23 +37,109 @@ Re-running setup is safe. Run it again whenever you rename or move the KB folder
 
 Multiple KBs can coexist as sibling folders in the project — each with its own `wiki-config.json`. Ask Codex to setup a new one, switch with `Use $llm-wiki to switch to <name>`, and inspect with `Use $llm-wiki to show the active KB`. The active selection is stored in `.agents/active-kb` (gitignored, per-clone). During migration, `.claude/active-kb` is read as a legacy fallback if the Codex pointer is missing.
 
+## Using with Codex
+
+This repo is Codex-ready through the local `llm-wiki` skill:
+
+```text
+$llm-wiki
+```
+
+In Codex, `$llm-wiki` is a **skill invocation**. It is not a separate agent, not a shell command, and not the old Claude slash-command system. The skill loads the wiki-specific operating rules from `.agents/skills/llm-wiki/SKILL.md`, then routes your request to the appropriate workflow reference under `.agents/skills/llm-wiki/references/`.
+
+You can invoke it explicitly:
+
+```text
+$llm-wiki wiki: how does data leakage relate to ML pipelines?
+```
+
+or in a more natural form:
+
+```text
+Use $llm-wiki to answer from wiki only: how does data leakage relate to ML pipelines?
+```
+
+The word after `$llm-wiki` selects the workflow:
+
+- `setup:` configures a KB folder and QMD collection.
+- `use:` switches or inspects the active KB.
+- `ingest:` processes raw source files into the wiki.
+- `wiki:` answers from existing wiki pages only, with no web research.
+- `query:` answers using wiki + raw-source rereading + web research when needed, then folds useful discoveries back into the wiki.
+- `lint:` audits wiki health.
+- `bug:` logs workflow issues to `bugs.md`.
+
+Examples:
+
+```text
+$llm-wiki use
+$llm-wiki use: machine-learning
+$llm-wiki ingest: machine-learning/raw/supervised/15_mistakes.pdf
+$llm-wiki wiki: explain the role of stratified cross-validation
+$llm-wiki query: what are current best practices for class imbalance?
+$llm-wiki lint
+$llm-wiki bug
+```
+
+The important distinction is:
+
+- `wiki:` is a **closed-book wiki lookup** over existing wiki content. It should not use web research or add new outside facts.
+- `query:` is a **research workflow**. It starts from the wiki, re-reads relevant raw sources because wiki summaries are lossy, uses web research when the question needs it, and updates the wiki with properly attributed findings.
+
 ## Codex Workflows
 
 The old Claude slash commands are now represented by the `llm-wiki` Codex skill and its workflow references.
 
-| Workflow prompt | Description |
-|---------|-------------|
-| `Use $llm-wiki to setup <path>` | Configure the KB root folder, initialize the QMD search index when available, and set this KB as active |
-| `Use $llm-wiki to show/switch active KB` | Inspect or change `.agents/active-kb` |
-| `Use $llm-wiki to ingest [path]` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview |
-| `Use $llm-wiki to query <question>` | Research a question using wiki knowledge + active web research, then update the wiki with discoveries |
-| `Use $llm-wiki to answer from wiki only: <question>` | Search the wiki only — no web research |
-| `Use $llm-wiki to lint the active KB` | Health-check the wiki for broken links, contradictions, orphan pages, missing cross-references |
-| `Use $llm-wiki to log wiki workflow bugs` | Review the current session for wiki workflow issues and log them to `bugs.md` |
+| Old Claude command | Codex workflow prompt | Description |
+|---|---|---|
+| `/setup <path>` | `$llm-wiki setup: <path>` | Configure the KB root folder, initialize the QMD search index when available, and set this KB as active |
+| `/use` | `$llm-wiki use` | Show the active KB and all detected KBs |
+| `/use <name>` | `$llm-wiki use: <name>` | Set `.agents/active-kb` to a configured KB basename |
+| `/ingest [path]` | `$llm-wiki ingest: [path]` | Process a source document — creates a summary page, updates entities, concepts, cross-references, and the overview |
+| `/wiki <question>` | `$llm-wiki wiki: <question>` | Search the wiki only — no web research |
+| `/query <question>` | `$llm-wiki query: <question>` | Research a question using wiki knowledge + raw-source rereading + active web research, then update the wiki with discoveries |
+| `/lint` | `$llm-wiki lint` | Health-check the wiki for broken links, contradictions, orphan pages, missing cross-references |
+| `/bug` | `$llm-wiki bug` | Review the current session for wiki workflow issues and log them to `bugs.md` |
+
+### Active KB selection
+
+Codex uses `.agents/active-kb` as the per-clone active-KB pointer. It contains a single basename such as:
+
+```text
+machine-learning
+```
+
+The basename must match a sibling KB folder that contains `wiki-config.json`. If `.agents/active-kb` is missing, Codex may read `.claude/active-kb` as a read-only legacy fallback during migration, but Codex workflows write only `.agents/active-kb`.
+
+If multiple KBs are detected and no active pointer is set, Codex lists the detected KBs and asks which basename to use for that run.
+
+### QMD behavior in Codex
+
+Codex workflows use your existing `qmd` installation and its existing QMD index. They do not install, rebuild, replace, or relocate QMD unless you explicitly ask.
+
+If `qmd` comes from an nvm-managed Node installation, Codex should run it with that same `bin` directory at the front of `PATH` so the wrapper uses the matching Node runtime:
+
+```bash
+PATH="$(dirname "$(which qmd)"):$PATH" qmd status
+```
+
+The same prefix can be applied to `qmd query`, `qmd vsearch`, `qmd update`, and `qmd embed` when needed.
+
+If QMD is unavailable or broken, Codex should continue with file-based wiki work and report `[QMD not available - semantic steps skipped]` once.
+
+### Legacy Claude files
+
+The old `.claude/commands/*.md` prompt files are kept as migration reference material. The Codex source of truth is:
+
+```text
+.agents/skills/llm-wiki/SKILL.md
+.agents/skills/llm-wiki/references/*.md
+AGENTS.md
+```
 
 ## How it works
 
-**Four layers:**
+**Five layers:**
 
 - **Raw sources** (`<kb-root>/raw/`) — your curated source documents. Immutable — the LLM reads but never modifies them.
 - **The wiki** (`<kb-root>/wiki/`) — LLM-generated markdown pages: source summaries, entity pages, concept pages, analyses, an overview, and an index. The LLM owns this entirely.
