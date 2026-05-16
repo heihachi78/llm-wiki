@@ -13,9 +13,19 @@ allowed-tools: Bash(qmd:*), mcp__qmd__*
 
 Local search engine for markdown content.
 
+## Execution Rule
+
+Always run QMD CLI commands outside the sandbox with escalated permissions. Do not first try `qmd` in the sandbox: QMD uses user-level sqlite databases, caches, and embedding/model files outside the workspace, so sandbox execution is expected to fail with misleading errors such as `SQLITE_CANTOPEN`, sqlite-vec probe failures, or cache/model access problems. Those errors mean the command was run in the wrong execution mode, not that QMD should be skipped.
+
+When QMD is installed under nvm, keep its matching Node binary first in `PATH`:
+
+```bash
+PATH="$(dirname "$(which qmd)"):$PATH" qmd query "question" -c collection -n 10 --json
+```
+
 ## Status
 
-!`qmd status 2>/dev/null || echo "Not installed: npm install -g @tobilu/qmd"`
+Check installation with `which qmd`. Run `qmd status` only with escalated permissions, not in the sandbox.
 
 ## MCP: `query`
 

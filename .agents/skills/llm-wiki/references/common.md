@@ -16,7 +16,8 @@ The active KB pointer for Codex lives at `.agents/active-kb`. It contains one ba
    - One hit: use it silently.
    - Multiple hits: list basename plus absolute path and ask the user which basename to use for this run. Do not write a pointer for one-shot selections.
 7. Check `which qmd > /dev/null 2>&1`. If missing, set QMD availability to false.
-8. If `qmd` exists but a QMD command fails because the installed package is broken, treat QMD as unavailable for that run and report the failure briefly.
+8. If `qmd` exists, QMD availability is true. All later `qmd` CLI commands must run outside the sandbox with escalated permissions; do not do a sandbox trial first.
+9. Treat QMD as unavailable only if an escalated QMD command fails for a real QMD/runtime reason. Sandbox failures such as `SQLITE_CANTOPEN`, sqlite-vec probe failures, cache/model access failures, or home-directory permission errors are not evidence that QMD is unavailable; they mean the command was run in the wrong execution mode.
 
 ## Required Context
 
@@ -28,6 +29,8 @@ The active KB pointer for Codex lives at `.agents/active-kb`. It contains one ba
 ## QMD Commands
 
 When QMD is available, use the user's existing `qmd` command and its existing index. Do not install, rebuild, reinstall, or replace QMD unless the user explicitly asks. Do not override `XDG_CACHE_HOME`, `XDG_CONFIG_HOME`, `HOME`, or QMD state paths unless the user explicitly asks.
+
+QMD CLI commands must always be executed with escalated permissions rather than in the sandbox. QMD reads and writes user-level sqlite/cache/model state outside the workspace, so sandbox execution is expected to fail and wastes a turn. If escalation is required by the tool, request it immediately for the `qmd` command.
 
 If `which qmd` resolves inside an nvm version directory such as `/Users/.../.nvm/versions/node/<version>/bin/qmd`, run QMD with that same `bin` directory at the front of `PATH` so the wrapper uses its matching `node` binary:
 

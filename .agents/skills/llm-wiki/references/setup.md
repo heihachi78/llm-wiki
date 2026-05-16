@@ -23,7 +23,7 @@ Use when the user asks to configure or initialize a KB.
    - `<root>/wiki/overview.md` with `type: overview` frontmatter and today's date.
    - `<root>/wiki/log.md` with a `# Wiki Operation Log` heading.
 6. Derive a 1-2 sentence QMD context from `overview.md`, or use `"<collection> research knowledge base"`.
-7. If QMD is available:
+7. If QMD is available, run all QMD commands with escalated permissions, not in the sandbox:
    - Run `qmd collection list`.
    - Add the collection only if missing.
    - Run `qmd context add qmd://<collection> "<description>"`.

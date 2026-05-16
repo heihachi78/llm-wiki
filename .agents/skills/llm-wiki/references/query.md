@@ -4,7 +4,7 @@ Use when the user asks to answer with wiki knowledge plus current or external re
 
 1. Read `references/common.md`; resolve `<root>` and `<collection>`.
 2. Read `<root>/wiki/index.md` and relevant wiki pages. If the wiki is empty, say research works best after ingesting sources, then continue only if the user still wants web research.
-3. If QMD is available, run `qmd query "<question>" -c <collection> -n 10 --json`.
+3. If QMD is available, run `qmd query "<question>" -c <collection> -n 10 --json` with escalated permissions, not in the sandbox.
 4. Re-read relevant raw sources before web research:
    - Use `sources:` frontmatter on relevant wiki pages to find raw files under `<root>/raw/`.
    - Scan for details relevant to this question that the wiki summary may have missed.
@@ -32,7 +32,7 @@ Researched and synthesized answer. Re-read N raw sources; created/updated M wiki
 Key finding: most important discovery in one sentence.
 ```
 
-12. If QMD is available, run `qmd update -c <collection>` and `qmd embed`.
+12. If QMD is available, run `qmd update -c <collection>` and `qmd embed` with escalated permissions, not in the sandbox.
 13. Ask whether to save the synthesized answer as an analysis page. If yes, create it, cross-link it, update `index.md`, append `log.md`, and re-index if QMD is available.
 
 Never fabricate quotes. Never use source-internal locators on concept/entity/analysis pages.

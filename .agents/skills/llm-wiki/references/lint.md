@@ -18,7 +18,7 @@ Use when the user asks to health-check a wiki.
    - Missing concept/entity pages for important named items.
    - Weak cross-references, especially concept-analysis pairs sharing a topic or two or more tags.
    - Incomplete pages that can be filled from existing sources.
-   - If QMD is available, run semantic gap checks with `qmd vsearch "<title> <summary>" -c <collection> -n 5 --json`.
+   - If QMD is available, run semantic gap checks with `qmd vsearch "<title> <summary>" -c <collection> -n 5 --json` using escalated permissions, not in the sandbox.
 5. Check low-severity issues:
    - Formatting drift from `AGENTS.md`.
    - Missing frontmatter fields.
@@ -37,4 +37,4 @@ Use when the user asks to health-check a wiki.
 Brief summary of what was found and fixed.
 ```
 
-9. If QMD is available and pages changed, run `qmd update -c <collection>` and `qmd embed`.
+9. If QMD is available and pages changed, run `qmd update -c <collection>` and `qmd embed` with escalated permissions, not in the sandbox.

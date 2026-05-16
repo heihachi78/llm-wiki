@@ -1,5 +1,7 @@
 # QMD MCP Server Setup
 
+For CLI commands in Codex, run QMD outside the sandbox with escalated permissions. QMD uses user-level sqlite/cache/model state, so sandbox execution is expected to fail with misleading access errors.
+
 ## Install
 
 ```bash

@@ -6,7 +6,7 @@ Use when the user asks to answer from the existing wiki only, with no web resear
 2. Read `<root>/wiki/index.md` and `<root>/wiki/overview.md`.
 3. If the wiki is empty or has no relevant entries, say so and suggest ingesting sources or using the query workflow.
 4. Identify relevant source, concept, entity, and analysis pages from the index.
-5. If QMD is available, run `qmd query "<question>" -c <collection> -n 10 --json` and union high-relevance results with index-derived candidates.
+5. If QMD is available, run `qmd query "<question>" -c <collection> -n 10 --json` with escalated permissions, not in the sandbox, and union high-relevance results with index-derived candidates.
 6. Read the relevant wiki pages and follow useful cross-references.
 7. Answer directly from wiki content only:
    - Cite wiki pages with relative links.

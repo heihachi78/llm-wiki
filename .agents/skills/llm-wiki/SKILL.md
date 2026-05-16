@@ -31,4 +31,5 @@ Use this skill to maintain the repository's persistent research wikis: immutable
 - Source-derived wiki claims must be supported by the cited source. Verbatim quote blocks must be literal substrings of the source that was read.
 - Source-internal locators such as slide, page, section, timestamp, or line numbers belong on source pages only. Concept, entity, and analysis pages cite by wiki-link to source pages.
 - After any wiki-modifying operation, update `<root>/wiki/index.md`, append `<root>/wiki/log.md`, and re-index with QMD when available.
-- If QMD is unavailable or broken, complete the non-semantic parts of the workflow and mention `[QMD not available - semantic steps skipped]` once.
+- QMD CLI commands must be run outside the sandbox with escalated permissions. Do not first try QMD in the sandbox: QMD depends on user-level sqlite/cache/model state outside the workspace and sandbox attempts are expected to fail.
+- Treat QMD as unavailable only if `which qmd` is missing or an escalated QMD command fails for a real QMD/runtime reason. Do not label sandbox `SQLITE_CANTOPEN`, sqlite-vec, cache, model, or home-directory access errors as QMD unavailability.

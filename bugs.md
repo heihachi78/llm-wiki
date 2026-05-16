@@ -40,3 +40,12 @@
 - **Problem:** When invoked with no arguments, the agent listed all raw files without cross-referencing the wiki index to identify which had already been ingested. The user had to ask a follow-up question to get that information, requiring an extra round-trip.
 - **Context:** `/ingest` called with no arguments; wiki already had 4 ingested sources at the time.
 - **Status:** Fixed (2026-04-11 — added Step 0 to `ingest.md`: cross-references `index.md` and presents ingested/not-yet-ingested table before asking which file to process)
+
+## [2026-05-16] Bug Report
+
+### Issue 6: QMD was incorrectly attempted in the sandbox and then treated as skippable
+- **Command:** wiki-only lookup / analysis filing
+- **Severity:** Medium
+- **Problem:** The agent first ran `qmd query` in the sandbox. It failed with sqlite/cache access errors (`SQLITE_CANTOPEN` / sqlite-vec probe failure), and the agent initially treated that as a reason to skip QMD semantic search. QMD is expected to need user-level sqlite/cache/model state outside the workspace, so sandbox execution is the wrong mode.
+- **Context:** During a wiki-only answer about the TSP cheapest insertion heuristic, the user correctly pointed out that QMD must not be skipped and later clarified that QMD should never be run in the sandbox.
+- **Status:** Fixed (2026-05-16 — updated `llm-wiki` and `qmd` skill instructions: all QMD CLI commands must run with escalated permissions from the start; sandbox sqlite/cache/model errors must not be interpreted as QMD unavailability.)

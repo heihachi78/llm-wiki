@@ -21,8 +21,8 @@ Use when the user asks to process a raw source into the wiki.
    - Sections: Summary, Key Findings, Key Quotes, Methodology if applicable, Relevance, Contradictions, Source Info.
    - Re-read relevant source passages while writing. Do not write from memory.
    - Include only verified verbatim quotes. If none are usable, say so.
-8. Identify entities actually named or described in the source. Use QMD `vsearch` when available before creating new pages. Update or create `<root>/wiki/entities/*.md` using only source-supported information.
-9. Identify concepts actually discussed in the source. Use QMD `vsearch` when available before creating new pages. Update or create `<root>/wiki/concepts/*.md` using only source-supported information.
+8. Identify entities actually named or described in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/entities/*.md` using only source-supported information.
+9. Identify concepts actually discussed in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/concepts/*.md` using only source-supported information.
 10. Add bidirectional cross-references among all touched pages.
 11. Update `<root>/wiki/overview.md` only if the source changes the big picture.
 12. Update `<root>/wiki/index.md` entries for all new or substantially changed pages.
@@ -34,6 +34,6 @@ Brief description of what was ingested. N entity pages created/updated, M concep
 Key finding: most important takeaway in one sentence.
 ```
 
-14. If QMD is available, run `qmd update -c <collection>` and `qmd embed`.
+14. If QMD is available, run `qmd update -c <collection>` and `qmd embed` with escalated permissions, not in the sandbox.
 
 Keep concept/entity/analysis pages free of source-internal locators. Attribute there by wiki-link to source pages.

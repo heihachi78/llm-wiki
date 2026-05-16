@@ -55,7 +55,7 @@ Every workflow that operates on a KB starts with this **resolution rule** — th
    - **Zero hits** — suggest the setup workflow. Stop.
    - **Exactly one hit** — use it silently. (No prompt; the single-KB case must remain frictionless.)
    - **Multiple hits** — print a numbered list of detected KBs (basename + absolute path) and ask the operator: "Reply with the basename to use for this run, or use the active-KB workflow to set it persistently." When the operator replies with a basename, treat it as a one-shot selection: resolve `<root>` and `<collection>` against that KB and continue, but do **not** write `.agents/active-kb`. The pointer is only written by the active-KB and setup workflows.
-4. **QMD availability.** Check `which qmd > /dev/null 2>&1`. If unavailable, skip QMD steps in the calling command and note `[QMD not available — semantic steps skipped]` once.
+4. **QMD availability.** Check `which qmd > /dev/null 2>&1`. If missing, skip QMD steps in the calling command and note `[QMD not available — semantic steps skipped]` once. If present, QMD is available and every QMD CLI command must run outside the sandbox with escalated permissions; never do a sandbox trial first.
 
 Pointer inspection and switching:
 - Ask Codex to use the `llm-wiki` active-KB workflow. For example: `Use $llm-wiki to show the active KB` or `Use $llm-wiki to switch to machine-learning`.
@@ -68,7 +68,11 @@ The ingest, query, wiki-only, lint, and setup workflows call the [QMD](https://g
 npm install -g @tobilu/qmd   # or: bun install -g @tobilu/qmd
 ```
 
-Workflows check availability with `which qmd` and degrade gracefully (skip semantic steps, note once in the response) if missing or broken. Use the user's existing `qmd` environment and index by default; do not install, rebuild, reinstall, or replace QMD unless the user explicitly asks. Do not override `XDG_CACHE_HOME`, `XDG_CONFIG_HOME`, or other QMD state paths unless the user explicitly asks. When adding a step that uses QMD, follow the same pattern — don't hard-fail.
+Workflows check availability with `which qmd` and degrade gracefully (skip semantic steps, note once in the response) only if QMD is missing or an escalated QMD command fails for a real QMD/runtime reason. Use the user's existing `qmd` environment and index by default; do not install, rebuild, reinstall, or replace QMD unless the user explicitly asks. Do not override `XDG_CACHE_HOME`, `XDG_CONFIG_HOME`, or other QMD state paths unless the user explicitly asks.
+
+QMD CLI commands must always be executed outside the sandbox with escalated permissions. QMD reads/writes user-level sqlite databases, caches, and embedding/model files outside the workspace, so sandbox execution is expected to fail with misleading errors such as `SQLITE_CANTOPEN`, sqlite-vec probe failures, or cache/model access errors. Those errors mean QMD was run in the wrong execution mode; they are not a reason to skip QMD.
+
+When adding a step that uses QMD, follow the same pattern: check `which qmd`; if present, run the QMD command escalated from the start.
 
 If `which qmd` resolves inside an nvm version directory, run QMD with that same `bin` directory at the front of `PATH` so the wrapper uses its matching `node` binary:
 
