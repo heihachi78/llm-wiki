@@ -23,6 +23,7 @@ Hard rule: ingest never creates or updates files under `<root>/wiki/analyses/`, 
    - Sections: Summary, Key Findings, Key Quotes, Methodology if applicable, Relevance, Contradictions, Source Info, Detailed Content
    - Re-read relevant source passages while writing. Do not write from memory.
    - Include only verified verbatim quotes. If none are usable, say so.
+   - The goal of the source page is NOT only to summarize the source: raw source files can be in any document format, and they usually structure the content differently. Thats why you need to create the source files: to preserve the relevant details and to create sources that are in the same format and structure.
 8. Identify entities actually named or described in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/entities/*.md` using only source-supported information.
 9. Identify concepts actually discussed in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/concepts/*.md` using only source-supported information.
 10. Add bidirectional cross-references among all touched pages. The newly created source page must always reference the original raw source.
