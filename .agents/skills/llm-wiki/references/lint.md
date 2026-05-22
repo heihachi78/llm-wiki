@@ -8,7 +8,7 @@ Use when the user asks to health-check a wiki.
    - Contradictions.
    - Stale claims superseded by newer sources.
    - Broken wiki links.
-   - Broken raw file references in source frontmatter or Source Info.
+   - Broken or missing raw file references in source frontmatter or Source Info.
    - Malformed `sources:` values. When a matching source page exists, replace with the correct source page filename; never leave `sources: []` as a fix.
    - Unverifiable quote blocks against cited raw files.
    - Unsupported factual claims, spot-checking specific names, numbers, dates, definitions, and methodology details against cited sources.
