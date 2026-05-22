@@ -49,3 +49,12 @@
 - **Problem:** The agent first ran `qmd query` in the sandbox. It failed with sqlite/cache access errors (`SQLITE_CANTOPEN` / sqlite-vec probe failure), and the agent initially treated that as a reason to skip QMD semantic search. QMD is expected to need user-level sqlite/cache/model state outside the workspace, so sandbox execution is the wrong mode.
 - **Context:** During a wiki-only answer about the TSP cheapest insertion heuristic, the user correctly pointed out that QMD must not be skipped and later clarified that QMD should never be run in the sandbox.
 - **Status:** Fixed (2026-05-16 — updated `llm-wiki` and `qmd` skill instructions: all QMD CLI commands must run with escalated permissions from the start; sandbox sqlite/cache/model errors must not be interpreted as QMD unavailability.)
+
+## [2026-05-22] Bug Report
+
+### Issue 7: `/ingest` incorrectly created an analysis page
+- **Command:** /ingest
+- **Severity:** Medium
+- **Problem:** During ingestion of a source that was itself a synthesized exam guide, the agent created `wiki/analyses/kidolgozott-vizsgatetelek-attekintese.md`. Ingest must never create analysis pages; analysis pages should only be created when the user explicitly requests a wiki-level synthesis based on searching the whole wiki and confirms it should be filed.
+- **Context:** Triggered while processing `Infobiztonsag_Adatvedelem_Tetelek_Kidolgozva.md` in the `infobizt-adatvedelem` KB. The analysis page was removed from the KB, and the ingest workflow was updated with an explicit hard rule.
+- **Status:** Fixed (2026-05-22 — updated `llm-wiki/SKILL.md` and `references/ingest.md` to prohibit analysis creation during ingest and to keep ingest output limited to source/entity/concept pages.)

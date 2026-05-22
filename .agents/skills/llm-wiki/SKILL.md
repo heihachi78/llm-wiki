@@ -28,6 +28,7 @@ Use this skill to maintain the repository's persistent research wikis: immutable
 
 - Preserve existing user or KB changes. Integrate rather than overwrite.
 - Never modify files in `<root>/raw/`.
+- Ingest workflows must never create or update analysis pages. Analysis pages are created only when the user explicitly asks for a wiki-level synthesis, after searching the whole wiki, and confirms that the synthesis should be filed.
 - Source-derived wiki claims must be supported by the cited source. Verbatim quote blocks must be literal substrings of the source that was read.
 - Source-internal locators such as slide, page, section, timestamp, or line numbers belong on source pages only. Concept, entity, and analysis pages cite by wiki-link to source pages.
 - After any wiki-modifying operation, update `<root>/wiki/index.md`, append `<root>/wiki/log.md`, and re-index with QMD when available.

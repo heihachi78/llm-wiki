@@ -2,6 +2,8 @@
 
 Use when the user asks to process a raw source into the wiki.
 
+Hard rule: ingest never creates or updates files under `<root>/wiki/analyses/`, even if the source is a synthesis, overview, exam guide, or comparative document. Analysis pages are reserved for explicit user-requested wiki-level synthesis workflows, after searching the whole wiki and getting confirmation to file the result. During ingest, put source-supported synthesis material into the source page and, when appropriate, into entity/concept pages only.
+
 1. Read `references/common.md`; resolve `<root>` and `<collection>`.
 2. If the user provided a source path, resolve it absolutely and walk upward to see whether it belongs to a KB. If it belongs to a different KB than the active one, ask whether to switch, use that KB once, or cancel.
 3. If no source path was provided:
@@ -25,15 +27,15 @@ Use when the user asks to process a raw source into the wiki.
 9. Identify concepts actually discussed in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/concepts/*.md` using only source-supported information.
 10. Add bidirectional cross-references among all touched pages.
 11. Update `<root>/wiki/overview.md` only if the source changes the big picture.
-12. Update `<root>/wiki/index.md` entries for all new or substantially changed pages.
+12. Update `<root>/wiki/index.md` entries for all new or substantially changed source, entity, and concept pages. Do not add analysis entries during ingest.
 13. Append `<root>/wiki/log.md`:
 
 ```markdown
 ## [YYYY-MM-DD] ingest | Source Title
-Brief description of what was ingested. N entity pages created/updated, M concept pages created/updated.
+Brief description of what was ingested. N entity pages created/updated, M concept pages created/updated. 0 analysis pages created.
 Key finding: most important takeaway in one sentence.
 ```
 
 14. If QMD is available, run `qmd update -c <collection>` and `qmd embed` with escalated permissions, not in the sandbox.
 
-Keep concept/entity/analysis pages free of source-internal locators. Attribute there by wiki-link to source pages.
+Keep concept/entity pages free of source-internal locators. Attribute there by wiki-link to source pages.
