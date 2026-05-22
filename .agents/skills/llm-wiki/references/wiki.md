@@ -14,7 +14,8 @@ Use when the user asks to answer from the existing wiki only, with no web resear
    - Do not add prior knowledge or web information.
    - State gaps and confidence.
    - Surface contradictions if present.
-   - Be detailed.
+   - Be detailed as possible.
+   - Be as accurate as possible.
 8. If the synthesis is useful enough to preserve, ask whether to file it as `<root>/wiki/analyses/*.md`.
 9. If the user approves filing:
    - Create an analysis page with frontmatter and Summary, Findings, Methodology, Sources sections.
@@ -29,3 +30,5 @@ Key finding: most important insight in one sentence.
 ```
 
 10. Update `overview.md` only if the filed analysis changes the big-picture synthesis.
+
+Important: DO NOT use language, like "according to the wiki", "based on the wiki page ...". Instead in the main text of the analysis identify the source wiki page in the format: "... (source: source wiki page link )... "
