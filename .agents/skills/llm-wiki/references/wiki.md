@@ -14,6 +14,7 @@ Use when the user asks to answer from the existing wiki only, with no web resear
    - Do not add prior knowledge or web information.
    - State gaps and confidence.
    - Surface contradictions if present.
+   - Be detailed.
 8. If the synthesis is useful enough to preserve, ask whether to file it as `<root>/wiki/analyses/*.md`.
 9. If the user approves filing:
    - Create an analysis page with frontmatter and Summary, Findings, Methodology, Sources sections.

@@ -20,12 +20,12 @@ Hard rule: ingest never creates or updates files under `<root>/wiki/analyses/`, 
 6. Ask the user what to emphasize or de-emphasize before writing pages when the source admits multiple reasonable framings.
 7. Create or update the source page in `<root>/wiki/sources/`:
    - Frontmatter: `title`, `type: source`, `tags`, `sources`, `date_created`, `date_updated`.
-   - Sections: Summary, Key Findings, Key Quotes, Methodology if applicable, Relevance, Contradictions, Source Info.
+   - Sections: Summary, Key Findings, Key Quotes, Methodology if applicable, Relevance, Contradictions, Source Info, Detailed Content
    - Re-read relevant source passages while writing. Do not write from memory.
    - Include only verified verbatim quotes. If none are usable, say so.
 8. Identify entities actually named or described in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/entities/*.md` using only source-supported information.
 9. Identify concepts actually discussed in the source. Use QMD `vsearch` with escalated permissions when available before creating new pages. Update or create `<root>/wiki/concepts/*.md` using only source-supported information.
-10. Add bidirectional cross-references among all touched pages.
+10. Add bidirectional cross-references among all touched pages. The newly created source page must always reference the original raw source.
 11. Update `<root>/wiki/overview.md` only if the source changes the big picture.
 12. Update `<root>/wiki/index.md` entries for all new or substantially changed source, entity, and concept pages. Do not add analysis entries during ingest.
 13. Append `<root>/wiki/log.md`:
