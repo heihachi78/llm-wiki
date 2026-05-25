@@ -97,7 +97,7 @@ index.md       # Content catalog — read first on any operation
 log.md         # Chronological operation log (append-only)
 overview.md    # High-level synthesis / evolving thesis
 sources/       # One page per ingested source
-entities/      # People, organizations, tools, datasets
+entities/      # People, organizations, tools, datasets, authors
 concepts/      # Ideas, theories, methods, frameworks
 analyses/      # Comparisons, syntheses, filed query outputs
 ```
