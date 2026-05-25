@@ -181,3 +181,10 @@ Use the `llm-wiki` skill explicitly (`$llm-wiki`) or ask in natural language:
 - Never modify files in `<kb-root>/raw/` — sources are immutable.
 - When judgment calls about emphasis or interpretation come up, ask the user rather than guessing.
 - The wiki is read by humans (often via Obsidian), not just by retrieval — write accordingly.
+
+## Important notes
+- The sources MUST contain all information related to the wiki topik. If you think something must left out, ask the user.
+- DO NOT just sample the raw content even if its long but process the entire RAW content.
+- Never create an alysis page unless the user explicitly asks for it.
+- Concept pages MUST be as accurate as possible.
+- Never guess, when in doubt, ASK THE USER.
